@@ -11,22 +11,15 @@ document.addEventListener("DOMContentLoaded", function () {
     checkAuth();
   }
 
-  // Load data order dari backend
   loadOrders();
 
-  // Setup semua event listeners
   setupEventListeners();
 
-  // Setup modal listeners
   setupModalListeners();
 
-  // Initialize charts
   initializeCharts();
 });
 
-// ===== FUNGSI UTAMA =====
-
-// 1. LOAD DATA ORDER DARI BACKEND
 async function loadOrders() {
   try {
     showLoading();
