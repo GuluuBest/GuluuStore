@@ -116,7 +116,7 @@ function createOrderRow(order) {
   const proofUrl = order.payment_proof
     ? order.payment_proof.startsWith("http")
       ? order.payment_proof.replace("https://", "http://")
-      : `http://192.168.100.17:3000${order.payment_proof}`
+      : `https://guluustore.onrender.com${order.payment_proof}`
     : null;
 
   // Generate HTML untuk produk
@@ -729,7 +729,7 @@ function showOrderDetailModal(order) {
   const proofUrl = order.payment_proof
     ? order.payment_proof.startsWith("http")
       ? order.payment_proof.replace("https://", "http://")
-      : `http://192.168.100.17:3000${order.payment_proof}`
+      : `https://guluustore.onrender.com${order.payment_proof}`
     : null;
 
   const html = `
