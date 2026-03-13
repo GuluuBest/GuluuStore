@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://192.168.100.17:3000/api";
+const API_BASE_URL = "https://guluustore.onrender.com/api";
 
 let allOrders = [];
 let currentFilter = "all";
