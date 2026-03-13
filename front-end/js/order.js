@@ -1,57 +1,59 @@
-// orders.js - Riwayat Order
+const API_URL = "https://guluustore.onrender.com/api";
 
-const API_URL = "http://localhost:3000/api";
-
-document.addEventListener('DOMContentLoaded', function() {
-    loadOrders();
-    setupFilterButtons();
+document.addEventListener("DOMContentLoaded", function () {
+  loadOrders();
+  setupFilterButtons();
 });
 
-async function loadOrders(filter = 'all') {
-    const ordersList = document.getElementById('ordersList');
-    const emptyState = document.getElementById('emptyState');
-    
-    // Show loading
-    ordersList.innerHTML = `
+async function loadOrders(filter = "all") {
+  const ordersList = document.getElementById("ordersList");
+  const emptyState = document.getElementById("emptyState");
+
+  // Show loading
+  ordersList.innerHTML = `
         <div class="loading-state">
             <i class="fas fa-spinner fa-spin"></i>
             <p>Memuat riwayat order...</p>
         </div>
     `;
-    emptyState.style.display = 'none';
-    
-    try {
-        // Get all orders from backend
-        const response = await fetch(`${API_URL}/orders`);
-        
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        const result = await response.json();
-        
-        if (result.success) {
-            // Filter orders
-            let filteredOrders = result.orders;
-            if (filter !== 'all') {
-                filteredOrders = result.orders.filter(order => order.status === filter);
-            }
-            
-            // Sort by date (newest first)
-            filteredOrders.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-            
-            if (filteredOrders.length === 0) {
-                ordersList.style.display = 'none';
-                emptyState.style.display = 'block';
-                return;
-            }
-            
-            // Render orders
-            renderOrders(filteredOrders);
-        }
-    } catch (error) {
-        console.error('Error loading orders:', error);
-        ordersList.innerHTML = `
+  emptyState.style.display = "none";
+
+  try {
+    // Get all orders from backend
+    const response = await fetch(`${API_URL}/orders`);
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+
+    if (result.success) {
+      // Filter orders
+      let filteredOrders = result.orders;
+      if (filter !== "all") {
+        filteredOrders = result.orders.filter(
+          (order) => order.status === filter,
+        );
+      }
+
+      // Sort by date (newest first)
+      filteredOrders.sort(
+        (a, b) => new Date(b.created_at) - new Date(a.created_at),
+      );
+
+      if (filteredOrders.length === 0) {
+        ordersList.style.display = "none";
+        emptyState.style.display = "block";
+        return;
+      }
+
+      // Render orders
+      renderOrders(filteredOrders);
+    }
+  } catch (error) {
+    console.error("Error loading orders:", error);
+    ordersList.innerHTML = `
             <div class="error-state">
                 <i class="fas fa-exclamation-triangle"></i>
                 <h3>Gagal memuat riwayat</h3>
@@ -61,39 +63,43 @@ async function loadOrders(filter = 'all') {
                 </button>
             </div>
         `;
-    }
+  }
 }
 
 function renderOrders(orders) {
-    const ordersList = document.getElementById('ordersList');
-    
-    let html = '';
-    
-    orders.forEach(order => {
-        const statusClass = getStatusClass(order.status);
-        const statusText = getStatusText(order.status);
-        const date = new Date(order.created_at).toLocaleDateString('id-ID', {
-            day: 'numeric',
-            month: 'short',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-        });
-        
-        // Parse product data
-        let productData;
-        try {
-            productData = typeof order.product_data === 'string' 
-                ? JSON.parse(order.product_data) 
-                : order.product_data;
-        } catch (e) {
-            productData = [];
-        }
-        
-        // Calculate total items
-        const totalItems = productData.reduce((sum, item) => sum + (item.quantity || 1), 0);
-        
-        html += `
+  const ordersList = document.getElementById("ordersList");
+
+  let html = "";
+
+  orders.forEach((order) => {
+    const statusClass = getStatusClass(order.status);
+    const statusText = getStatusText(order.status);
+    const date = new Date(order.created_at).toLocaleDateString("id-ID", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+
+    // Parse product data
+    let productData;
+    try {
+      productData =
+        typeof order.product_data === "string"
+          ? JSON.parse(order.product_data)
+          : order.product_data;
+    } catch (e) {
+      productData = [];
+    }
+
+    // Calculate total items
+    const totalItems = productData.reduce(
+      (sum, item) => sum + (item.quantity || 1),
+      0,
+    );
+
+    html += `
             <div class="order-card ${statusClass}">
                 <div class="order-header">
                     <div class="order-meta">
@@ -119,21 +125,25 @@ function renderOrders(orders) {
                     
                     <div class="order-items">
                         <h4><i class="fas fa-box"></i> Items (${totalItems})</h4>
-                        ${productData.map(item => `
+                        ${productData
+                          .map(
+                            (item) => `
                             <div class="order-item">
                                 <div class="item-name">${item.name}</div>
                                 <div class="item-meta">
-                                    ${item.variant ? `<span class="item-variant">${item.variant}</span>` : ''}
+                                    ${item.variant ? `<span class="item-variant">${item.variant}</span>` : ""}
                                     <span class="item-quantity">Qty: ${item.quantity || 1}</span>
-                                    <span class="item-price">Rp ${(item.price * (item.quantity || 1)).toLocaleString('id-ID')}</span>
+                                    <span class="item-price">Rp ${(item.price * (item.quantity || 1)).toLocaleString("id-ID")}</span>
                                 </div>
                             </div>
-                        `).join('')}
+                        `,
+                          )
+                          .join("")}
                     </div>
                     
                     <div class="order-total">
                         <span>Total Pembayaran:</span>
-                        <strong>Rp ${order.total_price.toLocaleString('id-ID')}</strong>
+                        <strong>Rp ${order.total_price.toLocaleString("id-ID")}</strong>
                     </div>
                 </div>
                 
@@ -147,58 +157,58 @@ function renderOrders(orders) {
                 </div>
             </div>
         `;
-    });
-    
-    ordersList.innerHTML = html;
-    ordersList.style.display = 'block';
+  });
+
+  ordersList.innerHTML = html;
+  ordersList.style.display = "block";
 }
 
 function setupFilterButtons() {
-    const filterButtons = document.querySelectorAll('.filter-btn');
-    
-    filterButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            // Remove active class from all buttons
-            filterButtons.forEach(btn => btn.classList.remove('active'));
-            
-            // Add active class to clicked button
-            this.classList.add('active');
-            
-            // Load orders with filter
-            const filter = this.getAttribute('data-filter');
-            loadOrders(filter);
-        });
+  const filterButtons = document.querySelectorAll(".filter-btn");
+
+  filterButtons.forEach((button) => {
+    button.addEventListener("click", function () {
+      // Remove active class from all buttons
+      filterButtons.forEach((btn) => btn.classList.remove("active"));
+
+      // Add active class to clicked button
+      this.classList.add("active");
+
+      // Load orders with filter
+      const filter = this.getAttribute("data-filter");
+      loadOrders(filter);
     });
+  });
 }
 
 function getStatusClass(status) {
-    const statusClasses = {
-        'pending_payment': 'status-pending',
-        'verified': 'status-verified',
-        'completed': 'status-completed',
-        'cancelled': 'status-cancelled'
-    };
-    return statusClasses[status] || 'status-pending';
+  const statusClasses = {
+    pending_payment: "status-pending",
+    verified: "status-verified",
+    completed: "status-completed",
+    cancelled: "status-cancelled",
+  };
+  return statusClasses[status] || "status-pending";
 }
 
 function getStatusText(status) {
-    const statusTexts = {
-        'pending_payment': 'Menunggu Verifikasi',
-        'verified': 'Terverifikasi',
-        'completed': 'Selesai',
-        'cancelled': 'Dibatalkan'
-    };
-    return statusTexts[status] || 'Menunggu';
+  const statusTexts = {
+    pending_payment: "Menunggu Verifikasi",
+    verified: "Terverifikasi",
+    completed: "Selesai",
+    cancelled: "Dibatalkan",
+  };
+  return statusTexts[status] || "Menunggu";
 }
 
 function contactAboutOrder(orderCode) {
-    const message = `Halo admin, saya ingin menanyakan tentang order saya:\nKode Order: ${orderCode}`;
-    const whatsappUrl = `https://wa.me/6285793903739?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
+  const message = `Halo admin, saya ingin menanyakan tentang order saya:\nKode Order: ${orderCode}`;
+  const whatsappUrl = `https://wa.me/6285793903739?text=${encodeURIComponent(message)}`;
+  window.open(whatsappUrl, "_blank");
 }
 
 // Add styles for orders list
-const style = document.createElement('style');
+const style = document.createElement("style");
 style.textContent = `
     .orders-list {
         display: grid;

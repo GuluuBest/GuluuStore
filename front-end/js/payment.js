@@ -1,4 +1,4 @@
-const API_URL = "http://192.168.100.17:3000/api";
+const API_URL = "https://guluustore.onrender.com/api";
 
 const uploadArea = document.getElementById("uploadArea");
 const paymentProof = document.getElementById("paymentProof");

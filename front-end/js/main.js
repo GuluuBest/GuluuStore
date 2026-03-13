@@ -1,6 +1,3 @@
-// main.js - GANTI menjadi:
-
-// DOM Elements
 const productsGrid = document.getElementById("productsGrid");
 const loadMoreBtn = document.getElementById("loadMoreBtn");
 const themeToggle = document.getElementById("themeToggle");
