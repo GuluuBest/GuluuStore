@@ -1,0 +1,1021 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manajemen Pelanggan - Guluu Store</title>
+    <link rel="stylesheet" href="css/layout.css" />
+    <link rel="stylesheet" href="css/customers.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://img.icons8.com/color/96/000000/shopping-bag.png"
+    />
+    <!-- Chart.js for customer analytics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <div class="admin-container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <div class="logo-container">
+            <img src="logo.png" alt="logo" />
+            <h1 class="logo-text">Guluu<span>Store</span></h1>
+          </div>
+          <p class="store-subtitle">Admin Panel</p>
+        </div>
+
+        <nav class="sidebar-menu">
+          <ul class="menu-list">
+            <li class="menu-item" data-menu="dashboard">
+              <a href="dashboard.html">
+                <i class="fas fa-chart-line"></i>
+                <span class="menu-text">Dashboard</span>
+                <div class="menu-active-indicator"></div>
+                <div class="menu-hover-effect"></div>
+              </a>
+            </li>
+            <li class="menu-item" data-menu="products">
+              <a href="products.html">
+                <i class="fas fa-box-open"></i>
+                <span class="menu-text">Produk</span>
+                <div class="menu-active-indicator"></div>
+                <div class="menu-hover-effect"></div>
+              </a>
+            </li>
+            <li class="menu-item" data-menu="orders">
+              <a href="orders.html">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="menu-text">Order</span>
+                <div class="menu-active-indicator"></div>
+                <div class="menu-hover-effect"></div>
+              </a>
+            </li>
+            <li class="menu-item active" data-menu="customers">
+              <a href="customers.html">
+                <i class="fas fa-users"></i>
+                <span class="menu-text">Pelanggan</span>
+                <div class="menu-active-indicator"></div>
+                <div class="menu-hover-effect"></div>
+              </a>
+            </li>
+            <li class="menu-item" data-menu="analytics">
+              <a href="analytics.html">
+                <i class="fas fa-chart-pie"></i>
+                <span class="menu-text">Analitik</span>
+                <div class="menu-active-indicator"></div>
+                <div class="menu-hover-effect"></div>
+              </a>
+            </li>
+          </ul>
+
+          <div class="sidebar-footer">
+            <div class="version-info">
+              <i class="fas fa-code-branch"></i>
+              <span>v2.1.0</span>
+            </div>
+          </div>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <!-- Top Navbar -->
+        <header class="top-navbar">
+          <div class="navbar-left">
+            <button class="sidebar-toggle" id="sidebarToggle">
+              <i class="fas fa-bars"></i>
+            </button>
+            <div class="page-title">
+              <h2 id="pageTitle">Manajemen Pelanggan</h2>
+              <p id="pageSubtitle">
+                Kelola data pelanggan dan riwayat transaksi
+              </p>
+            </div>
+          </div>
+
+          <div class="navbar-right">
+            <div class="navbar-tools">
+              <button
+                class="tool-btn"
+                id="exportCustomersBtn"
+                title="Ekspor Data"
+              >
+                <i class="fas fa-file-export"></i>
+              </button>
+              <button
+                class="tool-btn"
+                id="filterCustomersBtn"
+                title="Filter Pelanggan"
+              >
+                <i class="fas fa-filter"></i>
+              </button>
+              <div class="search-box">
+                <input
+                  type="text"
+                  placeholder="Cari pelanggan..."
+                  id="customerSearch"
+                />
+                <i class="fas fa-search"></i>
+              </div>
+            </div>
+
+            <!-- Admin Profile -->
+            <div class="admin-profile">
+              <div class="profile-info">
+                <div class="profile-avatar">
+                  <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="profile-details">
+                  <span class="admin-name" id="adminName">Admin Guluu</span>
+                  <span class="admin-role">Super Admin</span>
+                </div>
+              </div>
+              <div class="dropdown-arrow">
+                <i class="fas fa-chevron-down"></i>
+              </div>
+
+              <div class="profile-dropdown">
+                <div class="dropdown-item logout-btn" id="logoutBtn">
+                  <i class="fas fa-sign-out-alt"></i>
+                  <span>Logout</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <!-- Content Area -->
+        <main class="content-area">
+          <div class="content-wrapper">
+            <!-- Customers Header -->
+            <div class="customers-header">
+              <div class="header-stats">
+                <div class="stat-item">
+                  <i class="fas fa-users"></i>
+                  <div>
+                    <h3 id="totalCustomersCount">48</h3>
+                    <p>Total Pelanggan</p>
+                  </div>
+                </div>
+                <div class="stat-item">
+                  <i class="fas fa-shopping-cart"></i>
+                  <div>
+                    <h3 id="activeCustomersCount">32</h3>
+                    <p>Pelanggan Aktif</p>
+                  </div>
+                </div>
+                <div class="stat-item">
+                  <i class="fas fa-star"></i>
+                  <div>
+                    <h3 id="premiumCustomersCount">8</h3>
+                    <p>Premium</p>
+                  </div>
+                </div>
+                <div class="stat-item">
+                  <i class="fas fa-money-bill-wave"></i>
+                  <div>
+                    <h3 id="avgOrderValue">Rp 425.000</h3>
+                    <p>Rata-rata Order</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Customers Analytics -->
+            <div class="customers-analytics">
+              <div class="analytics-card">
+                <div class="card-header">
+                  <h3>
+                    <i class="fas fa-chart-line"></i> Pertumbuhan Pelanggan
+                  </h3>
+                  <select class="period-select" id="growthPeriod">
+                    <option value="month" selected>Bulan Ini</option>
+                    <option value="quarter">Kuartal Ini</option>
+                    <option value="year">Tahun Ini</option>
+                  </select>
+                </div>
+                <div class="card-body">
+                  <div class="chart-container">
+                    <canvas id="customersChart"></canvas>
+                  </div>
+                </div>
+              </div>
+
+              <div class="analytics-card">
+                <div class="card-header">
+                  <h3><i class="fas fa-barcode"></i> Status Produk Digital</h3>
+                </div>
+                <div class="card-body">
+                  <div class="product-status-grid" id="productStatusGrid">
+                    <!-- Ready -->
+                    <div class="status-item ready">
+                      <div class="status-icon">
+                        <i class="fas fa-check-circle"></i>
+                      </div>
+                      <div class="status-info">
+                        <div class="status-label">Ready</div>
+                        <div class="status-count">245</div>
+                      </div>
+                    </div>
+
+                    <!-- Hampir Habis -->
+                    <div class="status-item warning">
+                      <div class="status-icon">
+                        <i class="fas fa-exclamation-circle"></i>
+                      </div>
+                      <div class="status-info">
+                        <div class="status-label">Hampir Habis</div>
+                        <div class="status-count">47</div>
+                      </div>
+                    </div>
+
+                    <!-- Habis -->
+                    <div class="status-item danger">
+                      <div class="status-icon">
+                        <i class="fas fa-times-circle"></i>
+                      </div>
+                      <div class="status-info">
+                        <div class="status-label">Habis</div>
+                        <div class="status-count">12</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Customers Actions -->
+            <div class="customers-actions">
+              <div class="action-buttons">
+                <button class="action-btn active" data-filter="all">
+                  <i class="fas fa-users"></i>
+                  <span>Semua Pelanggan</span>
+                </button>
+                <button class="action-btn" data-filter="active">
+                  <i class="fas fa-shopping-cart"></i>
+                  <span>Aktif (30 hari)</span>
+                </button>
+                <button class="action-btn" data-filter="premium">
+                  <i class="fas fa-crown"></i>
+                  <span>Premium</span>
+                </button>
+                <button class="action-btn" data-filter="new">
+                  <i class="fas fa-user-plus"></i>
+                  <span>Baru (7 hari)</span>
+                </button>
+                <button class="action-btn" data-filter="inactive">
+                  <i class="fas fa-user-clock"></i>
+                  <span>Tidak Aktif</span>
+                </button>
+              </div>
+
+              <div class="sort-controls">
+                <select class="sort-select" id="sortCustomers">
+                  <option value="newest">Terbaru</option>
+                  <option value="oldest">Terlama</option>
+                  <option value="name">Nama A-Z</option>
+                  <option value="name-desc">Nama Z-A</option>
+                  <option value="orders">Total Order</option>
+                  <option value="spent">Total Belanja</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Customers Table -->
+            <div class="customers-table-container">
+              <div class="table-responsive">
+                <table class="customers-table" id="customersTable">
+                  <thead>
+                    <tr>
+                      <th>
+                        <input type="checkbox" id="selectAllCustomers" />
+                      </th>
+                      <th>Pelanggan</th>
+                      <th>Email</th>
+                      <th>Telepon</th>
+                      <th>Total Order</th>
+                      <th>Total Belanja</th>
+                      <th>Status</th>
+                      <th>Terakhir Order</th>
+                      <th>Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody id="customersTableBody">
+                    <!-- Customer 1 -->
+                    <tr>
+                      <td>
+                        <input
+                          type="checkbox"
+                          class="customer-checkbox"
+                          data-id="CUST-001"
+                        />
+                      </td>
+                      <td>
+                        <div class="customer-cell">
+                          <div class="customer-avatar">
+                            <i class="fas fa-user-circle"></i>
+                          </div>
+                          <div class="customer-info">
+                            <div class="customer-name">Budi Santoso</div>
+                            <div class="customer-id">ID: CUST-001</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="email-cell">
+                        <div class="email-content">budi.santoso@email.com</div>
+                      </td>
+                      <td class="phone-cell">
+                        <div class="phone-content">0812-3456-7890</div>
+                      </td>
+                      <td class="orders-cell">
+                        <div class="orders-count">12</div>
+                        <div class="orders-label">order</div>
+                      </td>
+                      <td class="spent-cell">
+                        <div class="spent-amount">Rp 5.400.000</div>
+                        <div class="spent-label">total belanja</div>
+                      </td>
+                      <td>
+                        <span class="customer-badge badge-premium">
+                          <i class="fas fa-crown"></i> Premium
+                        </span>
+                      </td>
+                      <td class="last-order-cell">
+                        <div class="last-order-date">2 hari lalu</div>
+                        <div class="last-order-amount">Rp 450.000</div>
+                      </td>
+                      <td class="action-cell">
+                        <button
+                          class="action-icon view"
+                          data-id="CUST-001"
+                          title="Lihat Detail"
+                        >
+                          <i class="fas fa-eye"></i>
+                        </button>
+                        <button
+                          class="action-icon edit"
+                          data-id="CUST-001"
+                          title="Edit Data"
+                        >
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button
+                          class="action-icon message"
+                          data-id="CUST-001"
+                          title="Kirim Pesan"
+                        >
+                          <i class="fas fa-envelope"></i>
+                        </button>
+                      </td>
+                    </tr>
+                    <!-- Customer 2 -->
+                    <tr>
+                      <td>
+                        <input
+                          type="checkbox"
+                          class="customer-checkbox"
+                          data-id="CUST-002"
+                        />
+                      </td>
+                      <td>
+                        <div class="customer-cell">
+                          <div class="customer-avatar">
+                            <i class="fas fa-user-circle"></i>
+                          </div>
+                          <div class="customer-info">
+                            <div class="customer-name">Siti Aminah</div>
+                            <div class="customer-id">ID: CUST-002</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="email-cell">
+                        <div class="email-content">siti.aminah@email.com</div>
+                      </td>
+                      <td class="phone-cell">
+                        <div class="phone-content">0813-4567-8901</div>
+                      </td>
+                      <td class="orders-cell">
+                        <div class="orders-count">8</div>
+                        <div class="orders-label">order</div>
+                      </td>
+                      <td class="spent-cell">
+                        <div class="spent-amount">Rp 3.200.000</div>
+                        <div class="spent-label">total belanja</div>
+                      </td>
+                      <td>
+                        <span class="customer-badge badge-active">
+                          <i class="fas fa-shopping-cart"></i> Aktif
+                        </span>
+                      </td>
+                      <td class="last-order-cell">
+                        <div class="last-order-date">1 hari lalu</div>
+                        <div class="last-order-amount">Rp 320.000</div>
+                      </td>
+                      <td class="action-cell">
+                        <button
+                          class="action-icon view"
+                          data-id="CUST-002"
+                          title="Lihat Detail"
+                        >
+                          <i class="fas fa-eye"></i>
+                        </button>
+                        <button
+                          class="action-icon edit"
+                          data-id="CUST-002"
+                          title="Edit Data"
+                        >
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button
+                          class="action-icon message"
+                          data-id="CUST-002"
+                          title="Kirim Pesan"
+                        >
+                          <i class="fas fa-envelope"></i>
+                        </button>
+                      </td>
+                    </tr>
+                    <!-- Customer 3 -->
+                    <tr>
+                      <td>
+                        <input
+                          type="checkbox"
+                          class="customer-checkbox"
+                          data-id="CUST-003"
+                        />
+                      </td>
+                      <td>
+                        <div class="customer-cell">
+                          <div class="customer-avatar">
+                            <i class="fas fa-user-circle"></i>
+                          </div>
+                          <div class="customer-info">
+                            <div class="customer-name">Andi Wijaya</div>
+                            <div class="customer-id">ID: CUST-003</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="email-cell">
+                        <div class="email-content">andi.wijaya@email.com</div>
+                      </td>
+                      <td class="phone-cell">
+                        <div class="phone-content">0814-5678-9012</div>
+                      </td>
+                      <td class="orders-cell">
+                        <div class="orders-count">5</div>
+                        <div class="orders-label">order</div>
+                      </td>
+                      <td class="spent-cell">
+                        <div class="spent-amount">Rp 1.400.000</div>
+                        <div class="spent-label">total belanja</div>
+                      </td>
+                      <td>
+                        <span class="customer-badge badge-active">
+                          <i class="fas fa-shopping-cart"></i> Aktif
+                        </span>
+                      </td>
+                      <td class="last-order-cell">
+                        <div class="last-order-date">3 hari lalu</div>
+                        <div class="last-order-amount">Rp 280.000</div>
+                      </td>
+                      <td class="action-cell">
+                        <button
+                          class="action-icon view"
+                          data-id="CUST-003"
+                          title="Lihat Detail"
+                        >
+                          <i class="fas fa-eye"></i>
+                        </button>
+                        <button
+                          class="action-icon edit"
+                          data-id="CUST-003"
+                          title="Edit Data"
+                        >
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button
+                          class="action-icon message"
+                          data-id="CUST-003"
+                          title="Kirim Pesan"
+                        >
+                          <i class="fas fa-envelope"></i>
+                        </button>
+                      </td>
+                    </tr>
+                    <!-- Customer 4 -->
+                    <tr>
+                      <td>
+                        <input
+                          type="checkbox"
+                          class="customer-checkbox"
+                          data-id="CUST-004"
+                        />
+                      </td>
+                      <td>
+                        <div class="customer-cell">
+                          <div class="customer-avatar">
+                            <i class="fas fa-user-circle"></i>
+                          </div>
+                          <div class="customer-info">
+                            <div class="customer-name">Dewi Lestari</div>
+                            <div class="customer-id">ID: CUST-004</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="email-cell">
+                        <div class="email-content">dewi.lestari@email.com</div>
+                      </td>
+                      <td class="phone-cell">
+                        <div class="phone-content">0815-6789-0123</div>
+                      </td>
+                      <td class="orders-cell">
+                        <div class="orders-count">3</div>
+                        <div class="orders-label">order</div>
+                      </td>
+                      <td class="spent-cell">
+                        <div class="spent-amount">Rp 1.950.000</div>
+                        <div class="spent-label">total belanja</div>
+                      </td>
+                      <td>
+                        <span class="customer-badge badge-new">
+                          <i class="fas fa-user-plus"></i> Baru
+                        </span>
+                      </td>
+                      <td class="last-order-cell">
+                        <div class="last-order-date">5 hari lalu</div>
+                        <div class="last-order-amount">Rp 650.000</div>
+                      </td>
+                      <td class="action-cell">
+                        <button
+                          class="action-icon view"
+                          data-id="CUST-004"
+                          title="Lihat Detail"
+                        >
+                          <i class="fas fa-eye"></i>
+                        </button>
+                        <button
+                          class="action-icon edit"
+                          data-id="CUST-004"
+                          title="Edit Data"
+                        >
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button
+                          class="action-icon message"
+                          data-id="CUST-004"
+                          title="Kirim Pesan"
+                        >
+                          <i class="fas fa-envelope"></i>
+                        </button>
+                      </td>
+                    </tr>
+                    <!-- Customer 5 -->
+                    <tr>
+                      <td>
+                        <input
+                          type="checkbox"
+                          class="customer-checkbox"
+                          data-id="CUST-005"
+                        />
+                      </td>
+                      <td>
+                        <div class="customer-cell">
+                          <div class="customer-avatar">
+                            <i class="fas fa-user-circle"></i>
+                          </div>
+                          <div class="customer-info">
+                            <div class="customer-name">Rudi Hartono</div>
+                            <div class="customer-id">ID: CUST-005</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="email-cell">
+                        <div class="email-content">rudi.hartono@email.com</div>
+                      </td>
+                      <td class="phone-cell">
+                        <div class="phone-content">0816-7890-1234</div>
+                      </td>
+                      <td class="orders-cell">
+                        <div class="orders-count">1</div>
+                        <div class="orders-label">order</div>
+                      </td>
+                      <td class="spent-cell">
+                        <div class="spent-amount">Rp 890.000</div>
+                        <div class="spent-label">total belanja</div>
+                      </td>
+                      <td>
+                        <span class="customer-badge badge-inactive">
+                          <i class="fas fa-user-clock"></i> Tidak Aktif
+                        </span>
+                      </td>
+                      <td class="last-order-cell">
+                        <div class="last-order-date">45 hari lalu</div>
+                        <div class="last-order-amount">Rp 890.000</div>
+                      </td>
+                      <td class="action-cell">
+                        <button
+                          class="action-icon view"
+                          data-id="CUST-005"
+                          title="Lihat Detail"
+                        >
+                          <i class="fas fa-eye"></i>
+                        </button>
+                        <button
+                          class="action-icon edit"
+                          data-id="CUST-005"
+                          title="Edit Data"
+                        >
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button
+                          class="action-icon message"
+                          data-id="CUST-005"
+                          title="Kirim Pesan"
+                        >
+                          <i class="fas fa-envelope"></i>
+                        </button>
+                      </td>
+                    </tr>
+                    <!-- Customer 6 -->
+                    <tr>
+                      <td>
+                        <input
+                          type="checkbox"
+                          class="customer-checkbox"
+                          data-id="CUST-006"
+                        />
+                      </td>
+                      <td>
+                        <div class="customer-cell">
+                          <div class="customer-avatar">
+                            <i class="fas fa-user-circle"></i>
+                          </div>
+                          <div class="customer-info">
+                            <div class="customer-name">Maya Sari</div>
+                            <div class="customer-id">ID: CUST-006</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="email-cell">
+                        <div class="email-content">maya.sari@email.com</div>
+                      </td>
+                      <td class="phone-cell">
+                        <div class="phone-content">0817-8901-2345</div>
+                      </td>
+                      <td class="orders-cell">
+                        <div class="orders-count">7</div>
+                        <div class="orders-label">order</div>
+                      </td>
+                      <td class="spent-cell">
+                        <div class="spent-amount">Rp 2.625.000</div>
+                        <div class="spent-label">total belanja</div>
+                      </td>
+                      <td>
+                        <span class="customer-badge badge-active">
+                          <i class="fas fa-shopping-cart"></i> Aktif
+                        </span>
+                      </td>
+                      <td class="last-order-cell">
+                        <div class="last-order-date">7 hari lalu</div>
+                        <div class="last-order-amount">Rp 375.000</div>
+                      </td>
+                      <td class="action-cell">
+                        <button
+                          class="action-icon view"
+                          data-id="CUST-006"
+                          title="Lihat Detail"
+                        >
+                          <i class="fas fa-eye"></i>
+                        </button>
+                        <button
+                          class="action-icon edit"
+                          data-id="CUST-006"
+                          title="Edit Data"
+                        >
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button
+                          class="action-icon message"
+                          data-id="CUST-006"
+                          title="Kirim Pesan"
+                        >
+                          <i class="fas fa-envelope"></i>
+                        </button>
+                      </td>
+                    </tr>
+                    <!-- Customer 7 -->
+                    <tr>
+                      <td>
+                        <input
+                          type="checkbox"
+                          class="customer-checkbox"
+                          data-id="CUST-007"
+                        />
+                      </td>
+                      <td>
+                        <div class="customer-cell">
+                          <div class="customer-avatar">
+                            <i class="fas fa-user-circle"></i>
+                          </div>
+                          <div class="customer-info">
+                            <div class="customer-name">Agus Prasetyo</div>
+                            <div class="customer-id">ID: CUST-007</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="email-cell">
+                        <div class="email-content">agus.prasetyo@email.com</div>
+                      </td>
+                      <td class="phone-cell">
+                        <div class="phone-content">0818-9012-3456</div>
+                      </td>
+                      <td class="orders-cell">
+                        <div class="orders-count">9</div>
+                        <div class="orders-label">order</div>
+                      </td>
+                      <td class="spent-cell">
+                        <div class="spent-amount">Rp 11.250.000</div>
+                        <div class="spent-label">total belanja</div>
+                      </td>
+                      <td>
+                        <span class="customer-badge badge-premium">
+                          <i class="fas fa-crown"></i> Premium
+                        </span>
+                      </td>
+                      <td class="last-order-cell">
+                        <div class="last-order-date">14 hari lalu</div>
+                        <div class="last-order-amount">Rp 1.250.000</div>
+                      </td>
+                      <td class="action-cell">
+                        <button
+                          class="action-icon view"
+                          data-id="CUST-007"
+                          title="Lihat Detail"
+                        >
+                          <i class="fas fa-eye"></i>
+                        </button>
+                        <button
+                          class="action-icon edit"
+                          data-id="CUST-007"
+                          title="Edit Data"
+                        >
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button
+                          class="action-icon message"
+                          data-id="CUST-007"
+                          title="Kirim Pesan"
+                        >
+                          <i class="fas fa-envelope"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div
+                class="table-empty"
+                id="emptyCustomers"
+                style="display: none"
+              >
+                <div class="empty-state">
+                  <i class="fas fa-users"></i>
+                  <h3>Tidak ada pelanggan ditemukan</h3>
+                  <p>Coba ubah filter atau cari dengan kata kunci lain</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Table Actions -->
+            <div class="table-actions" id="bulkActions" style="display: none">
+              <div class="bulk-info">
+                <span id="selectedCount">0</span> pelanggan terpilih
+              </div>
+              <div class="bulk-buttons">
+                <button class="btn btn-sm btn-secondary" id="bulkExport">
+                  <i class="fas fa-file-export"></i> Ekspor
+                </button>
+                <button class="btn btn-sm btn-secondary" id="bulkMessage">
+                  <i class="fas fa-envelope"></i> Kirim Pesan
+                </button>
+                <select class="status-select-sm" id="bulkStatus">
+                  <option value="">Update Status</option>
+                  <option value="premium">Jadikan Premium</option>
+                  <option value="active">Tandai Aktif</option>
+                  <option value="inactive">Tandai Tidak Aktif</option>
+                </select>
+                <button class="btn btn-sm btn-danger" id="bulkDelete">
+                  <i class="fas fa-trash"></i> Hapus
+                </button>
+              </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination" id="customersPagination">
+              <button class="pagination-btn" id="prevPage" disabled>
+                <i class="fas fa-chevron-left"></i>
+              </button>
+              <div class="pagination-pages">
+                <button class="pagination-btn active">1</button>
+                <button class="pagination-btn">2</button>
+                <button class="pagination-btn">3</button>
+                <button class="pagination-btn">4</button>
+              </div>
+              <button class="pagination-btn" id="nextPage">
+                <i class="fas fa-chevron-right"></i>
+              </button>
+              <div class="pagination-info">Menampilkan 7 dari 48 pelanggan</div>
+            </div>
+          </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="main-footer">
+          <p>
+            &copy; <span id="currentYear">2024</span> Guluu Store Admin Panel.
+            Hak Cipta Dilindungi.
+          </p>
+        </footer>
+      </div>
+    </div>
+
+    <!-- View Customer Detail Modal -->
+    <div class="modal modal-xl" id="viewCustomerModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3><i class="fas fa-eye"></i> Detail Pelanggan</h3>
+          <div class="header-actions">
+            <button class="btn btn-sm" id="sendMessageBtn">
+              <i class="fas fa-envelope"></i> Kirim Pesan
+            </button>
+            <button class="modal-close">&times;</button>
+          </div>
+        </div>
+        <div class="modal-body">
+          <div class="customer-detail" id="customerDetailContent">
+            <!-- Customer detail will be filled by JavaScript -->
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            id="closeCustomerDetail"
+          >
+            Tutup
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Customer Modal -->
+    <div class="modal modal-lg" id="editCustomerModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3><i class="fas fa-edit"></i> Edit Data Pelanggan</h3>
+          <button class="modal-close">&times;</button>
+        </div>
+        <form id="editCustomerForm" class="modal-form">
+          <div class="modal-body">
+            <!-- Form will be filled by JavaScript -->
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              id="cancelEditCustomer"
+            >
+              Batal
+            </button>
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-save"></i> Update Data
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Send Message Modal -->
+    <div class="modal" id="sendMessageModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3><i class="fas fa-envelope"></i> Kirim Pesan</h3>
+          <button class="modal-close">&times;</button>
+        </div>
+        <form id="sendMessageForm" class="modal-form">
+          <div class="modal-body">
+            <div class="customer-info" id="messageCustomerInfo">
+              <!-- Customer info will be filled by JavaScript -->
+            </div>
+
+            <div class="form-group">
+              <label for="messageType">
+                <i class="fas fa-comment-alt"></i>
+                <span>Tipe Pesan *</span>
+              </label>
+              <select id="messageType" name="messageType" required>
+                <option value="">Pilih Tipe Pesan</option>
+                <option value="promotion">Promosi Produk</option>
+                <option value="newsletter">Newsletter</option>
+                <option value="announcement">Pengumuman</option>
+                <option value="personal">Pesan Personal</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="messageSubject">
+                <i class="fas fa-heading"></i>
+                <span>Subjek *</span>
+              </label>
+              <input
+                type="text"
+                id="messageSubject"
+                name="messageSubject"
+                required
+                placeholder="Masukkan subjek pesan"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="messageContent">
+                <i class="fas fa-file-alt"></i>
+                <span>Isi Pesan *</span>
+              </label>
+              <textarea
+                id="messageContent"
+                name="messageContent"
+                rows="6"
+                required
+                placeholder="Tulis isi pesan di sini..."
+              ></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="cancelMessage">
+              Batal
+            </button>
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-paper-plane"></i> Kirim Pesan
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Delete Customer Modal -->
+    <div class="modal" id="deleteCustomerModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3><i class="fas fa-trash-alt"></i> Hapus Pelanggan</h3>
+          <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p>Apakah Anda yakin ingin menghapus pelanggan ini?</p>
+          <p class="modal-warning">
+            <i class="fas fa-exclamation-triangle"></i>
+            Pelanggan yang dihapus tidak dapat dikembalikan. Semua data riwayat
+            order tetap tersimpan.
+          </p>
+          <div class="customer-to-delete" id="customerToDelete">
+            <!-- Customer info will be filled by JavaScript -->
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            id="cancelDeleteCustomer"
+          >
+            Batal
+          </button>
+          <button
+            type="button"
+            class="btn btn-danger"
+            id="confirmDeleteCustomer"
+          >
+            <i class="fas fa-trash"></i> Ya, Hapus Pelanggan
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/customers.js"></script>
+    <script>
+      // Set current year in footer
+      document.getElementById("currentYear").textContent =
+        new Date().getFullYear();
+    </script>
+  </body>
+</html>

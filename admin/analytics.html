@@ -1,0 +1,674 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Analitik - Guluu Store</title>
+    <link rel="stylesheet" href="css/layout.css" />
+    <link rel="stylesheet" href="css/analytics.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://img.icons8.com/color/96/000000/shopping-bag.png"
+    />
+    <!-- Chart.js for analytics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Date Range Picker -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+  </head>
+  <body>
+    <div class="admin-container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <div class="logo-container">
+            <img src="logo.png" alt="logo" />
+            <h1 class="logo-text">Guluu<span>Store</span></h1>
+          </div>
+          <p class="store-subtitle">Admin Panel</p>
+        </div>
+
+        <nav class="sidebar-menu">
+          <ul class="menu-list">
+            <li class="menu-item" data-menu="dashboard">
+              <a href="dashboard.html">
+                <i class="fas fa-chart-line"></i>
+                <span class="menu-text">Dashboard</span>
+                <div class="menu-active-indicator"></div>
+                <div class="menu-hover-effect"></div>
+              </a>
+            </li>
+            <li class="menu-item" data-menu="products">
+              <a href="products.html">
+                <i class="fas fa-box-open"></i>
+                <span class="menu-text">Produk</span>
+                <div class="menu-active-indicator"></div>
+                <div class="menu-hover-effect"></div>
+              </a>
+            </li>
+            <li class="menu-item" data-menu="orders">
+              <a href="orders.html">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="menu-text">Order</span>
+                <div class="menu-active-indicator"></div>
+                <div class="menu-hover-effect"></div>
+              </a>
+            </li>
+            <li class="menu-item" data-menu="customers">
+              <a href="customers.html">
+                <i class="fas fa-users"></i>
+                <span class="menu-text">Pelanggan</span>
+                <div class="menu-active-indicator"></div>
+                <div class="menu-hover-effect"></div>
+              </a>
+            </li>
+            <li class="menu-item active" data-menu="analytics">
+              <a href="analytics.html">
+                <i class="fas fa-chart-pie"></i>
+                <span class="menu-text">Analitik</span>
+                <div class="menu-active-indicator"></div>
+                <div class="menu-hover-effect"></div>
+              </a>
+            </li>
+          </ul>
+
+          <div class="sidebar-footer">
+            <div class="version-info">
+              <i class="fas fa-code-branch"></i>
+              <span>v2.1.0</span>
+            </div>
+          </div>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <!-- Top Navbar -->
+        <header class="top-navbar">
+          <div class="navbar-left">
+            <button class="sidebar-toggle" id="sidebarToggle">
+              <i class="fas fa-bars"></i>
+            </button>
+            <div class="page-title">
+              <h2 id="pageTitle">Analitik & Laporan</h2>
+              <p id="pageSubtitle">Analisis data penjualan dan kinerja toko</p>
+            </div>
+          </div>
+
+          <div class="navbar-right">
+            <div class="navbar-tools">
+              <div class="date-range-picker">
+                <i class="fas fa-calendar-alt"></i>
+                <input
+                  type="text"
+                  id="dateRange"
+                  name="dateRange"
+                  value="Hari ini"
+                />
+                <i class="fas fa-chevron-down"></i>
+              </div>
+              <button
+                class="tool-btn"
+                id="exportReportBtn"
+                title="Ekspor Laporan"
+              >
+                <i class="fas fa-file-export"></i>
+                <span>Ekspor</span>
+              </button>
+              <button
+                class="tool-btn"
+                id="printReportBtn"
+                title="Cetak Laporan"
+              >
+                <i class="fas fa-print"></i>
+              </button>
+            </div>
+
+            <!-- Admin Profile -->
+            <div class="admin-profile">
+              <div class="profile-info">
+                <div class="profile-avatar">
+                  <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="profile-details">
+                  <span class="admin-name" id="adminName">Admin Guluu</span>
+                  <span class="admin-role">Super Admin</span>
+                </div>
+              </div>
+              <div class="dropdown-arrow">
+                <i class="fas fa-chevron-down"></i>
+              </div>
+
+              <div class="profile-dropdown">
+                <div class="dropdown-item logout-btn" id="logoutBtn">
+                  <i class="fas fa-sign-out-alt"></i>
+                  <span>Logout</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <!-- Content Area -->
+        <main class="content-area">
+          <div class="content-wrapper">
+            <!-- Analytics Header -->
+            <div class="analytics-header">
+              <div class="header-stats">
+                <div class="stat-item">
+                  <i class="fas fa-money-bill-wave"></i>
+                  <div>
+                    <h3 id="totalRevenue">Rp 24.5 Jt</h3>
+                    <p>Total Pendapatan</p>
+                    <div class="stat-change positive">
+                      <i class="fas fa-arrow-up"></i>
+                      <span>12.5%</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="stat-item">
+                  <i class="fas fa-shopping-cart"></i>
+                  <div>
+                    <h3 id="totalOrders">148</h3>
+                    <p>Total Order</p>
+                    <div class="stat-change positive">
+                      <i class="fas fa-arrow-up"></i>
+                      <span>8.3%</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="stat-item">
+                  <i class="fas fa-users"></i>
+                  <div>
+                    <h3 id="totalCustomers">48</h3>
+                    <p>Pelanggan Baru</p>
+                    <div class="stat-change positive">
+                      <i class="fas fa-arrow-up"></i>
+                      <span>15.2%</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="stat-item">
+                  <i class="fas fa-box"></i>
+                  <div>
+                    <h3 id="avgOrderValue">Rp 165.5k</h3>
+                    <p>Rata-rata Order</p>
+                    <div class="stat-change negative">
+                      <i class="fas fa-arrow-down"></i>
+                      <span>3.2%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Performance Metrics -->
+            <div class="performance-metrics">
+              <div class="metrics-card">
+                <div class="card-header">
+                  <h3><i class="fas fa-tachometer-alt"></i> Metrik Kinerja</h3>
+                  <select class="period-select" id="metricsPeriod">
+                    <option value="week">Minggu Ini</option>
+                    <option value="month" selected>Bulan Ini</option>
+                    <option value="quarter">Kuartal Ini</option>
+                  </select>
+                </div>
+                <div class="card-body">
+                  <div class="metrics-grid">
+                    <div class="metric-item">
+                      <div
+                        class="metric-icon"
+                        style="background: rgba(0, 217, 255, 0.1)"
+                      >
+                        <i
+                          class="fas fa-shopping-cart"
+                          style="color: #00d9ff"
+                        ></i>
+                      </div>
+                      <div class="metric-info">
+                        <div class="metric-value">4.8</div>
+                        <div class="metric-label">Conversion Rate</div>
+                        <div class="metric-change positive">
+                          <i class="fas fa-arrow-up"></i>
+                          <span>2.4%</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="metric-item">
+                      <div
+                        class="metric-icon"
+                        style="background: rgba(157, 78, 221, 0.1)"
+                      >
+                        <i class="fas fa-redo" style="color: #9d4edd"></i>
+                      </div>
+                      <div class="metric-info">
+                        <div class="metric-value">28%</div>
+                        <div class="metric-label">Repeat Purchase</div>
+                        <div class="metric-change positive">
+                          <i class="fas fa-arrow-up"></i>
+                          <span>5.1%</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="metric-item">
+                      <div
+                        class="metric-icon"
+                        style="background: rgba(255, 193, 7, 0.1)"
+                      >
+                        <i class="fas fa-cart-plus" style="color: #ffc107"></i>
+                      </div>
+                      <div class="metric-info">
+                        <div class="metric-value">2.3</div>
+                        <div class="metric-label">Avg. Items/Order</div>
+                        <div class="metric-change negative">
+                          <i class="fas fa-arrow-down"></i>
+                          <span>0.8%</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="metric-item">
+                      <div
+                        class="metric-icon"
+                        style="background: rgba(76, 175, 80, 0.1)"
+                      >
+                        <i class="fas fa-user-check" style="color: #4caf50"></i>
+                      </div>
+                      <div class="metric-info">
+                        <div class="metric-value">92%</div>
+                        <div class="metric-label">Customer Satisfaction</div>
+                        <div class="metric-change positive">
+                          <i class="fas fa-arrow-up"></i>
+                          <span>3.7%</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Detailed Reports -->
+            <div class="detailed-reports">
+              <div class="report-card">
+                <div class="card-header">
+                  <h3>
+                    <i class="fas fa-chart-bar"></i> Top 10 Produk Terlaris
+                  </h3>
+                  <button class="btn btn-sm" id="viewAllProducts">
+                    Lihat Semua <i class="fas fa-arrow-right"></i>
+                  </button>
+                </div>
+                <div class="card-body">
+                  <div class="products-list">
+                    <div class="product-row">
+                      <div class="product-info">
+                        <div class="product-rank">1</div>
+                        <div class="product-name">Keyboard Mechanical X1</div>
+                        <div class="product-category">Periferal</div>
+                      </div>
+                      <div class="product-stats">
+                        <div class="product-sales">42 terjual</div>
+                        <div class="product-revenue">Rp 18.9 Jt</div>
+                      </div>
+                    </div>
+                    <div class="product-row">
+                      <div class="product-info">
+                        <div class="product-rank">2</div>
+                        <div class="product-name">Mouse Wireless Pro</div>
+                        <div class="product-category">Periferal</div>
+                      </div>
+                      <div class="product-stats">
+                        <div class="product-sales">38 terjual</div>
+                        <div class="product-revenue">Rp 12.2 Jt</div>
+                      </div>
+                    </div>
+                    <div class="product-row">
+                      <div class="product-info">
+                        <div class="product-rank">3</div>
+                        <div class="product-name">USB-C Hub 7in1</div>
+                        <div class="product-category">Aksesoris</div>
+                      </div>
+                      <div class="product-stats">
+                        <div class="product-sales">35 terjual</div>
+                        <div class="product-revenue">Rp 9.8 Jt</div>
+                      </div>
+                    </div>
+                    <div class="product-row">
+                      <div class="product-info">
+                        <div class="product-rank">4</div>
+                        <div class="product-name">Webcam 4K + Mic</div>
+                        <div class="product-category">Video</div>
+                      </div>
+                      <div class="product-stats">
+                        <div class="product-sales">28 terjual</div>
+                        <div class="product-revenue">Rp 24.9 Jt</div>
+                      </div>
+                    </div>
+                    <div class="product-row">
+                      <div class="product-info">
+                        <div class="product-rank">5</div>
+                        <div class="product-name">Monitor Stand Adjustable</div>
+                        <div class="product-category">Furnitur</div>
+                      </div>
+                      <div class="product-stats">
+                        <div class="product-sales">25 terjual</div>
+                        <div class="product-revenue">Rp 16.3 Jt</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="report-card">
+                <div class="card-header">
+                  <h3><i class="fas fa-chart-area"></i> Tren Waktu Order</h3>
+                  <select class="period-select" id="timePeriod">
+                    <option value="day">Per Hari</option>
+                    <option value="week" selected>Per Minggu</option>
+                    <option value="month">Per Bulan</option>
+                  </select>
+                </div>
+                <div class="card-body">
+                  <div class="time-stats">
+                    <div class="time-item">
+                      <div class="time-label">Pagi (08:00-12:00)</div>
+                      <div class="time-bar">
+                        <div class="time-fill" style="width: 25%"></div>
+                      </div>
+                      <div class="time-value">25%</div>
+                    </div>
+                    <div class="time-item">
+                      <div class="time-label">Siang (12:00-17:00)</div>
+                      <div class="time-bar">
+                        <div class="time-fill" style="width: 45%"></div>
+                      </div>
+                      <div class="time-value">45%</div>
+                    </div>
+                    <div class="time-item">
+                      <div class="time-label">Malam (17:00-22:00)</div>
+                      <div class="time-bar">
+                        <div class="time-fill" style="width: 30%"></div>
+                      </div>
+                      <div class="time-value">30%</div>
+                    </div>
+                    <div class="time-item">
+                      <div class="time-label">Weekend vs Weekday</div>
+                      <div class="time-bar">
+                        <div class="time-fill weekend" style="width: 40%"></div>
+                        <div class="time-fill weekday" style="width: 60%"></div>
+                      </div>
+                      <div class="time-value">40% / 60%</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Revenue Goals -->
+            <div class="revenue-goals">
+              <div class="goals-card">
+                <div class="card-header">
+                  <h3><i class="fas fa-bullseye"></i> Target Pendapatan</h3>
+                  <div class="goal-period">Bulan Ini</div>
+                </div>
+                <div class="card-body">
+                  <div class="goal-progress">
+                    <div class="goal-info">
+                      <div class="goal-target">Target: Rp 30 Jt</div>
+                      <div class="goal-current">Tercapai: Rp 24.5 Jt</div>
+                      <div class="goal-remaining">Sisa: Rp 5.5 Jt</div>
+                    </div>
+                    <div class="progress-bar">
+                      <div class="progress-fill" style="width: 81.7%">
+                        <span class="progress-text">81.7%</span>
+                      </div>
+                    </div>
+                    <div class="goal-days">
+                      <div class="days-info">
+                        <span class="days-passed">18 hari berlalu</span>
+                        <span class="days-remaining">12 hari tersisa</span>
+                      </div>
+                      <div class="days-progress">
+                        <div class="days-fill" style="width: 60%"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="main-footer">
+          <p>
+            &copy; <span id="currentYear"></span> Guluu Store Admin Panel. Hak
+            Cipta Dilindungi.
+          </p>
+        </footer>
+      </div>
+    </div>
+
+    <!-- Export Report Modal -->
+    <div class="modal" id="exportReportModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3><i class="fas fa-file-export"></i> Ekspor Laporan</h3>
+          <button class="modal-close">&times;</button>
+        </div>
+        <form id="exportReportForm" class="modal-form">
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="reportType">
+                <i class="fas fa-file-alt"></i>
+                <span>Jenis Laporan *</span>
+              </label>
+              <select id="reportType" name="reportType" required>
+                <option value="">Pilih Jenis Laporan</option>
+                <option value="sales">Laporan Penjualan</option>
+                <option value="revenue">Laporan Pendapatan</option>
+                <option value="products">Laporan Produk</option>
+                <option value="customers">Laporan Pelanggan</option>
+                <option value="full">Laporan Lengkap</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="exportFormat">
+                <i class="fas fa-download"></i>
+                <span>Format File *</span>
+              </label>
+              <select id="exportFormat" name="exportFormat" required>
+                <option value="">Pilih Format</option>
+                <option value="excel">Excel (.xlsx)</option>
+                <option value="csv">CSV (.csv)</option>
+                <option value="pdf">PDF (.pdf)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="exportPeriod">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Periode *</span>
+              </label>
+              <select id="exportPeriod" name="exportPeriod" required>
+                <option value="custom" selected>Kustom (sesuai filter)</option>
+                <option value="today">Hari Ini</option>
+                <option value="week">Minggu Ini</option>
+                <option value="month">Bulan Ini</option>
+                <option value="quarter">Kuartal Ini</option>
+                <option value="year">Tahun Ini</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="includeCharts">
+                <i class="fas fa-chart-bar"></i>
+                <span>Sertakan Grafik</span>
+              </label>
+              <div class="checkbox-group">
+                <input
+                  type="checkbox"
+                  id="includeCharts"
+                  name="includeCharts"
+                />
+                <label for="includeCharts"
+                  >Ya, sertakan grafik dalam laporan</label
+                >
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="cancelExport">
+              Batal
+            </button>
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-download"></i> Unduh Laporan
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Print Report Modal -->
+    <div class="modal" id="printReportModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3><i class="fas fa-print"></i> Cetak Laporan</h3>
+          <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="print-options">
+            <div class="form-group">
+              <label for="printType">
+                <i class="fas fa-print"></i>
+                <span>Jenis Cetakan *</span>
+              </label>
+              <select id="printType" name="printType" required>
+                <option value="">Pilih Jenis Cetakan</option>
+                <option value="summary">Ringkasan Analitik</option>
+                <option value="detailed">Laporan Detail</option>
+                <option value="charts">Grafik & Chart</option>
+                <option value="custom">Kustom</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="printOrientation">
+                <i class="fas fa-expand-alt"></i>
+                <span>Orientasi Kertas</span>
+              </label>
+              <div class="radio-group">
+                <label class="radio-option">
+                  <input
+                    type="radio"
+                    name="orientation"
+                    value="portrait"
+                    checked
+                  />
+                  <span>Portrait</span>
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="orientation" value="landscape" />
+                  <span>Landscape</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="printCharts">
+                <i class="fas fa-chart-pie"></i>
+                <span>Sertakan Grafik</span>
+              </label>
+              <div class="checkbox-group">
+                <input
+                  type="checkbox"
+                  id="printCharts"
+                  name="printCharts"
+                  checked
+                />
+                <label for="printCharts">Ya, cetak grafik</label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="printDate">
+                <i class="fas fa-calendar"></i>
+                <span>Tanggal pada Header</span>
+              </label>
+              <div class="checkbox-group">
+                <input
+                  type="checkbox"
+                  id="printDate"
+                  name="printDate"
+                  checked
+                />
+                <label for="printDate">Tampilkan tanggal cetak</label>
+              </div>
+            </div>
+
+            <div class="print-preview">
+              <h4><i class="fas fa-eye"></i> Preview Cetakan</h4>
+              <div class="preview-content">
+                <div class="preview-header">
+                  <h3>Laporan Analitik Guluu Store</h3>
+                  <p>Periode: ${getCurrentDateRange()}</p>
+                </div>
+                <div class="preview-stats">
+                  <div class="preview-stat">
+                    <div class="stat-label">Total Pendapatan</div>
+                    <div class="stat-value">Rp 24.5 Jt</div>
+                  </div>
+                  <div class="preview-stat">
+                    <div class="stat-label">Total Order</div>
+                    <div class="stat-value">148</div>
+                  </div>
+                  <div class="preview-stat">
+                    <div class="stat-label">Pelanggan Baru</div>
+                    <div class="stat-value">48</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="cancelPrint">
+            Batal
+          </button>
+          <button type="button" class="btn btn-primary" id="confirmPrint">
+            <i class="fas fa-print"></i> Cetak Sekarang
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/analytics.js"></script>
+    <script>
+      // Set current year in footer
+      document.getElementById("currentYear").textContent =
+        new Date().getFullYear();
+
+      // Helper function for preview
+      function getCurrentDateRange() {
+        const rangeInput = document.getElementById("dateRange");
+        return rangeInput ? rangeInput.value : "Hari ini";
+      }
+    </script>
+  </body>
+</html>

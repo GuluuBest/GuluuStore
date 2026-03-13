@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pembayaran | Guluu Digital Store</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/checkout.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body data-theme="dark">
+    <header class="main-header">
+      <div class="container">
+        <div class="logo">
+          <a href="index.html" class="logo-link">
+            <img src="./assets/logo.png" alt="Logo" class="logo-img" />
+            <h1 class="logo-title">
+              Guluu<span class="logo-title-span">Store</span>
+            </h1>
+          </a>
+        </div>
+
+        <nav class="main-nav">
+          <ul>
+            <li>
+              <a href="#" class="active"><i class="fas fa-home"></i> Home</a>
+            </li>
+            <li>
+              <a href="kategori.html"
+                ><i class="fas fa-th-large"></i> Product</a
+              >
+            </li>
+            <li>
+              <a href="#"><i class="fas fa-shopping-bag"></i> Cek Pesanan</a>
+            </li>
+
+            <li>
+              <a href="#"><i class="fas fa-fire"></i> Tentang</a>
+            </li>
+            <li>
+              <a href="#"><i class="fas fa-question-circle"></i> Bantuan</a>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="header-tools">
+          <div class="theme-switch-container">
+            <label class="switch">
+              <input type="checkbox" id="themeToggle" />
+              <span class="slider"></span>
+            </label>
+            <span class="theme-label">Dark Mode</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="payment-container">
+      <div class="container">
+        <!-- Progress Steps -->
+        <div class="checkout-progress">
+          <div class="progress-step completed">
+            <div class="step-number"><i class="fas fa-check"></i></div>
+            <div class="step-label">Checkout</div>
+          </div>
+          <div class="progress-step active">
+            <div class="step-number">2</div>
+            <div class="step-label">Pembayaran</div>
+          </div>
+          <div class="progress-step">
+            <div class="step-number">3</div>
+            <div class="step-label">Konfirmasi</div>
+          </div>
+        </div>
+
+        <div class="payment-layout">
+          <!-- LEFT: Payment Instructions -->
+          <div class="payment-instructions-section">
+            <h2><i class="fas fa-credit-card"></i> Pembayaran</h2>
+
+            <div class="payment-notice">
+              <div class="notice-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+              </div>
+              <div class="notice-content">
+                <h4>PENTING: Baca sebelum membayar</h4>
+                <p>
+                  Pesanan akan diproses
+                  <strong>setelah admin mengonfirmasi pembayaran</strong>.
+                </p>
+                <p>
+                  Admin akan menghubungi Anda via WhatsApp dalam 1x24 jam untuk
+                  mengirimkan produk.
+                </p>
+              </div>
+            </div>
+            <div class="payment-method">
+              <h3><i class="fas fa-qrcode"></i> Bayar via QRIS</h3>
+              <div class="qris-container">
+                <div class="qris-image">
+                  <img
+                    src="assets/QRIS.png"
+                    alt="QRIS Guluu Store"
+                  />
+                </div>
+                <div class="qris-instructions">
+                  <ol>
+                    <li>Buka aplikasi mobile banking/e-wallet Anda</li>
+                    <li>Pilih fitur <strong>Scan QRIS</strong></li>
+                    <li>Arahkan kamera ke QR code di samping</li>
+                    <li>Pastikan nominal sesuai dengan total pesanan</li>
+                    <li>Lakukan pembayaran</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bank Transfer -->
+            <div class="payment-method">
+              <h3><i class="fas fa-university"></i> Transfer Bank</h3>
+              <div class="bank-details">
+                <div class="bank-row">
+                  <span>Bank</span>
+                  <span>BCA (Bank Central Asia)</span>
+                </div>
+                <div class="bank-row">
+                  <span>Nomor Rekening</span>
+                  <span class="bank-number">1234 5678 9012</span>
+                </div>
+                <div class="bank-row">
+                  <span>Atas Nama</span>
+                  <span>GULUUDIGITAL STORE</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Upload Bukti -->
+            <div class="payment-upload-section">
+              <h3>
+                <i class="fas fa-cloud-upload-alt"></i> Upload Bukti Pembayaran
+              </h3>
+              <p class="upload-note">
+                Wajib upload bukti pembayaran untuk melanjutkan
+              </p>
+
+              <div class="upload-area" id="uploadArea">
+                <input
+                  type="file"
+                  id="paymentProof"
+                  accept="image/jpeg,image/png"
+                  hidden
+                />
+                <div class="upload-placeholder">
+                  <i class="fas fa-file-upload"></i>
+                  <p>Klik untuk upload bukti pembayaran</p>
+                  <small>Format: JPG atau PNG (maks. 5MB)</small>
+                </div>
+                <div
+                  class="upload-preview"
+                  id="uploadPreview"
+                  style="display: none"
+                >
+                  <img id="proofPreview" alt="Preview Bukti" />
+                  <button type="button" class="btn-remove" id="removeProof">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div class="upload-actions">
+                <button
+                  type="button"
+                  class="btn-secondary"
+                  onclick="window.history.back()"
+                >
+                  <i class="fas fa-arrow-left"></i> Kembali
+                </button>
+                <button
+                  type="button"
+                  class="btn-primary"
+                  id="confirmPayment"
+                  disabled
+                >
+                  <i class="fas fa-check-circle"></i> Saya Sudah Bayar
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT: Order Summary -->
+          <div class="order-summary-section">
+            <div class="order-summary-sticky">
+              <h2><i class="fas fa-receipt"></i> Ringkasan Pesanan</h2>
+
+              <div class="order-customer-info">
+                <h4><i class="fas fa-user"></i> Data Customer</h4>
+                <div id="customerInfo">
+                  <!-- Akan diisi oleh JavaScript -->
+                </div>
+              </div>
+
+              <div class="order-items" id="paymentOrderItems">
+                <!-- Akan diisi oleh JavaScript -->
+              </div>
+
+              <div class="order-totals">
+                <div class="total-row grand-total">
+                  <span>Total Pembayaran</span>
+                  <span id="paymentTotal">Rp 0</span>
+                </div>
+              </div>
+
+              <div class="payment-instruction">
+                <i class="fas fa-clock"></i>
+                <p>
+                  Segera upload bukti pembayaran setelah transfer untuk
+                  mempercepat proses verifikasi.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+      <!-- ... sama seperti footer store utama ... -->
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/payment.js"></script>
+  </body>
+</html>

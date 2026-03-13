@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title id="categoryTitle">Kategori | DigitalStore</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/kategory.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Header & Navigation -->
+    <header class="main-header">
+      <div class="container">
+        <div class="logo">
+          <a href="index.html" class="logo-link">
+            <img src="./assets/logo.png" alt="Logo" class="logo-img" />
+            <h1 class="logo-title">
+              Guluu<span class="logo-title-span">Store</span>
+            </h1>
+          </a>
+        </div>
+
+        <nav class="main-nav">
+          <ul>
+            <li>
+              <a href="index.html"><i class="fas fa-home"></i> Home</a>
+            </li>
+            <li>
+              <a href="index.html#categories" class="active"
+                ><i class="fas fa-th-large"></i> Product</a
+              >
+            </li>
+            <li>
+              <a href="index.html#order-check"
+                ><i class="fas fa-shopping-bag"></i> Cek Pesanan</a
+              >
+            </li>
+            <li>
+              <a href="index.html#best-sellers"
+                ><i class="fas fa-fire"></i> Tentang</a
+              >
+            </li>
+            <li>
+              <a href="index.html#footer"
+                ><i class="fas fa-question-circle"></i> Bantuan</a
+              >
+            </li>
+          </ul>
+        </nav>
+
+        <div class="header-tools">
+          <div class="theme-switch-container">
+            <label class="switch">
+              <input type="checkbox" id="themeToggle" />
+              <span class="slider"></span>
+            </label>
+            <span class="theme-label">Dark Mode</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Category Hero Section -->
+    <section class="category-hero" id="categoryHero">
+      <div class="container">
+        <div class="category-header">
+          <div class="category-info">
+            <div class="category-icon-large" id="categoryIcon">
+              <i class="fas fa-th-large"></i>
+            </div>
+            <div class="category-details">
+              <nav class="breadcrumb">
+                <a href="index.html">Home</a>
+                <i class="fas fa-chevron-right"></i>
+                <a href="index.html#categories">produk</a>
+                <i class="fas fa-chevron-right"></i>
+                <span id="currentCategory">Loading...</span>
+              </nav>
+              <h2 id="categoryName">Kategori Produk</h2>
+              <p id="categoryDescription">Memuat deskripsi kategori...</p>
+            </div>
+          </div>
+
+          <div class="category-stats" id="categoryStats">
+            <div class="stat">
+              <span class="stat-number">0</span>
+              <span class="stat-label">Produk</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">0</span>
+              <span class="stat-label">Tersedia</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">0</span>
+              <span class="stat-label">Terjual</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="category-main">
+      <div class="container">
+        <!-- Category Filters -->
+        <div class="category-filters">
+          <div class="filter-group">
+            <h4><i class="fas fa-filter"></i> Filter Lanjutan</h4>
+
+            <div class="filter-option">
+              <label for="priceRange">Rentang Harga</label>
+              <div class="price-range">
+                <input
+                  type="range"
+                  id="priceRange"
+                  min="0"
+                  max="500000"
+                  value="500000"
+                />
+                <div class="price-labels">
+                  <span>Rp 0</span>
+                  <span id="maxPrice">Rp 500.000</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="filter-option">
+              <label for="statusFilter">Status Stok</label>
+              <select id="statusFilter" class="filter-select">
+                <option value="all">Semua Status</option>
+                <option value="ready">Ready</option>
+                <option value="sold">Habis</option>
+              </select>
+            </div>
+
+            <div class="filter-option">
+              <label for="sortFilter">Urutkan</label>
+              <select id="sortFilter" class="filter-select">
+                <option value="popular">Terpopuler</option>
+                <option value="newest">Terbaru</option>
+                <option value="price-low">Harga: Rendah ke Tinggi</option>
+                <option value="price-high">Harga: Tinggi ke Rendah</option>
+                <option value="sold">Terlaris</option>
+              </select>
+            </div>
+
+            <button class="apply-filters-btn" id="applyFiltersBtn">
+              <i class="fas fa-check"></i>
+              Terapkan Filter
+            </button>
+
+            <button class="reset-filters-btn" id="resetCategoryFiltersBtn">
+              <i class="fas fa-redo"></i>
+              Reset Filter
+            </button>
+          </div>
+
+          <!-- Related Categories -->
+          <div class="related-categories" id="relatedCategories">
+            <h4><i class="fas fa-tags"></i> Kategori Lainnya</h4>
+            <div class="related-categories-list">
+              <!-- Related categories will be loaded here -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Category Products -->
+        <div class="category-products">
+          <div class="products-header">
+            <h3 id="productsCountTitle">
+              Produk (<span id="productsCount">0</span>)
+            </h3>
+            <div class="view-toggle">
+              <button class="view-btn active" data-view="grid">
+                <i class="fas fa-th-large"></i>
+              </button>
+              <button class="view-btn" data-view="list">
+                <i class="fas fa-list"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Products Grid/List -->
+          <div class="products-container grid-view" id="productsContainer">
+            <!-- Products will be loaded here by JavaScript -->
+          </div>
+
+          <!-- Empty State -->
+          <div
+            class="empty-state"
+            id="categoryEmptyState"
+            style="display: none"
+          >
+            <i class="fas fa-search fa-3x"></i>
+            <h3>Tidak ada produk ditemukan</h3>
+            <p>Coba ubah filter atau pilih kategori lain</p>
+            <a href="index.html#categories" class="back-to-categories-btn">
+              <i class="fas fa-arrow-left"></i>
+              Kembali ke Semua Kategori
+            </a>
+          </div>
+
+          <!-- Load More -->
+          <div class="load-more-container">
+            <button class="load-more-btn" id="categoryLoadMoreBtn">
+              <i class="fas fa-sync-alt"></i> Muat Lebih Banyak
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Featured Products Section -->
+    <section class="featured-category-section">
+      <div class="container">
+        <h3><i class="fas fa-crown"></i> Produk Unggulan di Kategori Ini</h3>
+        <div class="featured-products-grid" id="featuredProductsGrid">
+          <!-- Featured products will be loaded here -->
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="category-faq">
+      <div class="container">
+        <h3><i class="fas fa-question-circle"></i> FAQ Kategori</h3>
+        <div class="faq-container" id="categoryFaq">
+          <!-- FAQ will be loaded based on category -->
+          <div class="faq-item">
+            <div class="faq-question">
+              Apa itu produk digital?
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              Produk digital adalah produk yang dapat dikirim dan digunakan
+              secara online, seperti akun premium, software, template, e-book,
+              dan layanan digital lainnya.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <div class="logo">
+              <div class="footer-brand">
+                <img src="./assets/logo.png" alt="Logo" class="logo-img" />
+                <h1 class="logo-title">
+                  Guluu<span class="logo-title-span">Store</span>
+                </h1>
+              </div>
+            </div>
+            <p>
+              Toko digital terpercaya untuk kebutuhan akun premium, software,
+              dan layanan digital lainnya.
+            </p>
+            <div class="social-links">
+              <a href="#"><i class="fab fa-whatsapp"></i></a>
+              <a href="#"><i class="fab fa-telegram"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-discord"></i></a>
+            </div>
+          </div>
+
+          <div class="footer-section">
+            <h4>Layanan</h4>
+            <ul>
+              <li>
+                <a href="#"><i class="fas fa-shopping-cart"></i> Cara Beli</a>
+              </li>
+              <li>
+                <a href="#"><i class="fas fa-shield-alt"></i> Garansi Produk</a>
+              </li>
+              <li>
+                <a href="#"><i class="fas fa-headset"></i> Bantuan 24/7</a>
+              </li>
+              <li>
+                <a href="#"><i class="fas fa-question-circle"></i> FAQ</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <h4>Kontak</h4>
+            <div class="contact-info">
+              <p><i class="fas fa-envelope"></i> support@digitalstore.id</p>
+              <p><i class="fab fa-whatsapp"></i> +62 812-3456-7890</p>
+              <p><i class="fas fa-clock"></i> Buka 24/7</p>
+              <p><i class="fas fa-map-marker-alt"></i> Jakarta, Indonesia</p>
+            </div>
+          </div>
+
+          <div class="footer-section">
+            <h4>Kategori Populer</h4>
+            <ul id="popularCategories">
+              <!-- Popular categories will be loaded here -->
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>&copy; 2024 DigitalStore. All rights reserved.</p>
+          <div class="payment-methods">
+            <i class="fab fa-cc-visa" title="Visa"></i>
+            <i class="fab fa-cc-mastercard" title="Mastercard"></i>
+            <i class="fab fa-cc-paypal" title="PayPal"></i>
+            <i class="fab fa-bitcoin" title="Bitcoin"></i>
+            <i class="fas fa-university" title="Transfer Bank"></i>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop">
+      <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script src="js/data.js"></script>
+    <script src="js/kategori.js"></script>
+  </body>
+</html>

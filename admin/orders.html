@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manajemen Order - Guluu Store</title>
+    <link rel="stylesheet" href="css/layout.css" />
+    <link rel="stylesheet" href="css/orders.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://img.icons8.com/color/96/000000/shopping-bag.png"
+    />
+    <!-- Chart.js for order analytics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <div class="admin-container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <div class="logo-container">
+            <img src="logo.png" alt="logo" />
+            <h1 class="logo-text">Guluu<span>Store</span></h1>
+          </div>
+          <p class="store-subtitle">Admin Panel</p>
+        </div>
+
+        <nav class="sidebar-menu">
+          <ul class="menu-list">
+            <li class="menu-item" data-menu="dashboard">
+              <a href="dashboard.html">
+                <i class="fas fa-chart-line"></i>
+                <span class="menu-text">Dashboard</span>
+                <div class="menu-active-indicator"></div>
+                <div class="menu-hover-effect"></div>
+              </a>
+            </li>
+            <li class="menu-item" data-menu="products">
+              <a href="products.html">
+                <i class="fas fa-box-open"></i>
+                <span class="menu-text">Produk</span>
+                <div class="menu-active-indicator"></div>
+                <div class="menu-hover-effect"></div>
+              </a>
+            </li>
+            <li class="menu-item active" data-menu="orders">
+              <a href="orders.html">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="menu-text">Order</span>
+                <div class="menu-active-indicator"></div>
+                <div class="menu-hover-effect"></div>
+              </a>
+            </li>
+            <li class="menu-item" data-menu="customers">
+              <a href="customers.html">
+                <i class="fas fa-users"></i>
+                <span class="menu-text">Pelanggan</span>
+                <div class="menu-active-indicator"></div>
+                <div class="menu-hover-effect"></div>
+              </a>
+            </li>
+            <li class="menu-item" data-menu="analytics">
+              <a href="analytics.html">
+                <i class="fas fa-chart-pie"></i>
+                <span class="menu-text">Analitik</span>
+                <div class="menu-active-indicator"></div>
+                <div class="menu-hover-effect"></div>
+              </a>
+            </li>
+          </ul>
+
+          <div class="sidebar-footer">
+            <div class="version-info">
+              <i class="fas fa-code-branch"></i>
+              <span>v2.1.0</span>
+            </div>
+          </div>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <!-- Top Navbar -->
+        <header class="top-navbar">
+          <div class="navbar-left">
+            <button class="sidebar-toggle" id="sidebarToggle">
+              <i class="fas fa-bars"></i>
+            </button>
+            <div class="page-title">
+              <h2 id="pageTitle">Manajemen Order</h2>
+              <p id="pageSubtitle">Kelola pesanan dan transaksi pelanggan</p>
+            </div>
+          </div>
+
+          <div class="navbar-right">
+            <div class="navbar-tools">
+              <button
+                class="tool-btn"
+                id="refreshOrdersBtn"
+                title="Refresh Data"
+              >
+                <i class="fas fa-redo"></i>
+              </button>
+              <button class="tool-btn" id="printOrdersBtn" title="Cetak Order">
+                <i class="fas fa-print"></i>
+              </button>
+              <div class="search-box">
+                <input
+                  type="text"
+                  placeholder="Cari order..."
+                  id="orderSearch"
+                />
+                <i class="fas fa-search"></i>
+              </div>
+            </div>
+
+            <!-- Admin Profile -->
+            <div class="admin-profile">
+              <div class="profile-info">
+                <div class="profile-avatar">
+                  <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="profile-details">
+                  <span class="admin-name" id="adminName">Admin Guluu</span>
+                  <span class="admin-role">Super Admin</span>
+                </div>
+              </div>
+              <div class="dropdown-arrow">
+                <i class="fas fa-chevron-down"></i>
+              </div>
+
+              <div class="profile-dropdown">
+                <div class="dropdown-item logout-btn" id="logoutBtn">
+                  <i class="fas fa-sign-out-alt"></i>
+                  <span>Logout</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <!-- Content Area -->
+        <main class="content-area">
+          <div class="content-wrapper">
+            <!-- Orders Header -->
+            <div class="orders-header">
+              <div class="header-stats">
+                <div class="stat-item">
+                  <i class="fas fa-shopping-cart"></i>
+                  <div>
+                    <h3 id="totalOrdersCount">0</h3>
+                    <p>Total Order</p>
+                  </div>
+                </div>
+                <div class="stat-item">
+                  <i class="fas fa-clock"></i>
+                  <div>
+                    <h3 id="pendingOrdersCount">0</h3>
+                    <p>Pending</p>
+                  </div>
+                </div>
+                <div class="stat-item">
+                  <i class="fas fa-check-circle"></i>
+                  <div>
+                    <h3 id="verifiedOrdersCount">0</h3>
+                    <p>Terverifikasi</p>
+                  </div>
+                </div>
+                <div class="stat-item">
+                  <i class="fas fa-money-bill-wave"></i>
+                  <div>
+                    <h3 id="todayRevenue">Rp 0</h3>
+                    <p>Pendapatan Hari Ini</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Orders Analytics -->
+            <div class="orders-analytics">
+              <div class="analytics-card">
+                <div class="card-header">
+                  <h3><i class="fas fa-chart-line"></i> Statistik Order</h3>
+                  <select class="period-select" id="analyticsPeriod">
+                    <option value="week">Minggu Ini</option>
+                    <option value="month" selected>Bulan Ini</option>
+                    <option value="year">Tahun Ini</option>
+                  </select>
+                </div>
+                <div class="card-body">
+                  <div class="chart-container">
+                    <canvas id="ordersChart"></canvas>
+                  </div>
+                </div>
+              </div>
+
+              <div class="analytics-card">
+                <div class="card-header">
+                  <h3><i class="fas fa-chart-pie"></i> Status Order</h3>
+                </div>
+                <div class="card-body">
+                  <div class="chart-container">
+                    <canvas id="statusChart"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Orders Actions -->
+            <div class="orders-actions">
+              <div class="action-buttons">
+                <button class="action-btn active" data-filter="all">
+                  <i class="fas fa-boxes"></i>
+                  <span>Semua Order</span>
+                </button>
+                <button class="action-btn" data-filter="pending_payment">
+                  <i class="fas fa-clock"></i>
+                  <span>Menunggu Bayar</span>
+                </button>
+                <button class="action-btn" data-filter="verified">
+                  <i class="fas fa-cog"></i>
+                  <span>Terverifikasi</span>
+                </button>
+                <button class="action-btn" data-filter="completed">
+                  <i class="fas fa-check-circle"></i>
+                  <span>Selesai</span>
+                </button>
+                <button class="action-btn" data-filter="cancelled">
+                  <i class="fas fa-times-circle"></i>
+                  <span>Dibatalkan</span>
+                </button>
+              </div>
+
+              <div class="sort-controls">
+                <select class="sort-select" id="sortOrders">
+                  <option value="newest">Terbaru</option>
+                  <option value="oldest">Terlama</option>
+                  <option value="highest">Harga Tertinggi</option>
+                  <option value="lowest">Harga Terendah</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Orders Table -->
+            <div class="orders-table-container">
+              <div class="table-responsive">
+                <table class="orders-table" id="ordersTable">
+                  <thead>
+                    <tr>
+                      <th>Order ID</th>
+                      <th>Customer</th>
+                      <th>Produk</th>
+                      <th>Harga</th>
+                      <th>Status</th>
+                      <th>Bukti Bayar</th>
+                      <th>Catatan</th>
+                      <th>Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody id="ordersTableBody">
+                    <!-- Data akan diisi oleh JavaScript -->
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="table-empty" id="emptyOrders" style="display: none">
+                <div class="empty-state">
+                  <i class="fas fa-shopping-cart"></i>
+                  <h3>Tidak ada order ditemukan</h3>
+                  <p>Coba ubah filter atau cari dengan kata kunci lain</p>
+                  <button class="btn btn-primary" id="createFirstOrder">
+                    <i class="fas fa-plus"></i> Buat Order Pertama
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination" id="ordersPagination">
+              <button class="pagination-btn" id="prevPage" disabled>
+                <i class="fas fa-chevron-left"></i>
+              </button>
+              <div class="pagination-pages">
+                <button class="pagination-btn active">1</button>
+              </div>
+              <button class="pagination-btn" id="nextPage" disabled>
+                <i class="fas fa-chevron-right"></i>
+              </button>
+              <div class="pagination-info" id="paginationInfo">
+                Menampilkan 0 order
+              </div>
+            </div>
+          </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="main-footer">
+          <p>
+            &copy; <span id="currentYear">2024</span> Guluu Store Admin Panel.
+            Hak Cipta Dilindungi.
+          </p>
+        </footer>
+      </div>
+    </div>
+    <div class="modal modal-xl" id="viewOrderModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3><i class="fas fa-eye"></i> Detail Order</h3>
+          <div class="header-actions">
+            <button class="btn btn-sm" id="printOrderBtn">
+              <i class="fas fa-print"></i> Cetak
+            </button>
+            <button class="modal-close">&times;</button>
+          </div>
+        </div>
+        <div class="modal-body">
+          <div class="order-detail-container" id="orderDetailContent"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="closeOrderDetail">
+            Tutup
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Payment Proof Modal -->
+    <div class="modal modal-lg" id="paymentProofModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3><i class="fas fa-receipt"></i> Bukti Pembayaran</h3>
+          <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="proof-hover">
+            <img id="paymentProofImage" src="" alt="Bukti Pembayaran" />
+            <div class="proof-actions" style="display: flex; gap: 10px">
+              <a id="fullSizeLink" href="" target="_blank" class="btn btn-sm">
+                <i class="fas fa-external-link-alt"></i> Buka Ukuran Penuh
+              </a>
+              <button
+                class="btn btn-sm btn-secondary"
+                onclick="closePaymentProofModal()"
+              >
+                <i class="fas fa-times"></i> Tutup
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Update Status Modal -->
+    <div class="modal" id="updateStatusModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3><i class="fas fa-exchange-alt"></i> Update Status Order</h3>
+          <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="order-info" id="orderStatusInfo">
+            <!-- Order info will be filled by JavaScript -->
+          </div>
+
+          <div class="form-group">
+            <label for="newStatus">
+              <i class="fas fa-flag"></i>
+              <span>Status Baru *</span>
+            </label>
+            <select id="newStatus" name="newStatus" required>
+              <option value="">Pilih Status</option>
+              <option value="verified">Terverifikasi</option>
+              <option value="completed">Selesai</option>
+              <option value="cancelled">Dibatalkan</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="statusNotes">
+              <i class="fas fa-sticky-note"></i>
+              <span>Catatan Status (Opsional)</span>
+            </label>
+            <textarea
+              id="statusNotes"
+              name="statusNotes"
+              rows="3"
+              placeholder="Tambah catatan untuk perubahan status..."
+            ></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            id="cancelStatusUpdate"
+          >
+            Batal
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            id="confirmStatusUpdate"
+          >
+            <i class="fas fa-check"></i> Update Status
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/orders.js"></script>
+    <script>
+      // Set current year in footer
+      document.getElementById("currentYear").textContent =
+        new Date().getFullYear();
+    </script>
+  </body>
+</html>

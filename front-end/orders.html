@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Riwayat Order - Guluu Store</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/checkout.css" />
+    <link rel="stylesheet" href="css/order-status.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body data-theme="dark">
+    <header class="main-header">
+      <div class="container">
+        <div class="logo">
+          <a href="index.html">
+            <div class="logo-container">
+              <i class="fas fa-bolt"></i>
+            </div>
+            <h1>Guluu<span>Store</span></h1>
+          </a>
+        </div>
+        <nav class="main-nav">
+          <a href="index.html"><i class="fas fa-home"></i> Beranda</a>
+          <a href="kategori.html"><i class="fas fa-th-large"></i> Produk</a>
+          <a href="orders.html" class="active"
+            ><i class="fas fa-history"></i> Riwayat</a
+          >
+        </nav>
+      </div>
+    </header>
+
+    <main class="container" style="max-width: 1000px; margin: 40px auto">
+      <div class="page-header">
+        <h1><i class="fas fa-history"></i> Riwayat Order</h1>
+        <p>Lihat semua order yang pernah Anda buat</p>
+      </div>
+
+      <div class="orders-filter">
+        <button class="filter-btn active" data-filter="all">Semua</button>
+        <button class="filter-btn" data-filter="pending_payment">
+          Pending
+        </button>
+        <button class="filter-btn" data-filter="verified">Terverifikasi</button>
+        <button class="filter-btn" data-filter="completed">Selesai</button>
+      </div>
+
+      <div id="ordersList" class="orders-list">
+        <div class="loading-state">
+          <i class="fas fa-spinner fa-spin"></i>
+          <p>Memuat riwayat order...</p>
+        </div>
+      </div>
+
+      <div class="empty-state" id="emptyState" style="display: none">
+        <i class="fas fa-shopping-cart fa-3x"></i>
+        <h3>Belum ada order</h3>
+        <p>Yuk, belanja produk digital menarik!</p>
+        <a href="index.html" class="btn-primary">Lihat Produk</a>
+      </div>
+    </main>
+
+    <script src="js/order.js"></script>
+  </body>
+</html>

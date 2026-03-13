@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pesanan Diterima | Guluu Digital Store</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/checkout.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body data-theme="dark">
+    <!-- Header -->
+    <header class="main-header">
+      <div class="container">
+        <div class="logo">
+          <a href="index.html">
+            <div class="logo-container">
+              <i class="fas fa-bolt"></i>
+            </div>
+            <h1>Guluu<span>Store</span></h1>
+          </a>
+        </div>
+
+        <nav class="main-nav">
+          <ul>
+            <li>
+              <a href="index.html"><i class="fas fa-home"></i> Home</a>
+            </li>
+            <li>
+              <a href="kategori.html"
+                ><i class="fas fa-th-large"></i> Kategori</a
+              >
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="order-confirmation-container">
+      <div class="container">
+        <!-- Progress Steps -->
+        <div class="checkout-progress">
+          <div class="progress-step completed">
+            <div class="step-number"><i class="fas fa-check"></i></div>
+            <div class="step-label">Checkout</div>
+          </div>
+          <div class="progress-step completed">
+            <div class="step-number"><i class="fas fa-check"></i></div>
+            <div class="step-label">Pembayaran</div>
+          </div>
+          <div class="progress-step active">
+            <div class="step-number">3</div>
+            <div class="step-label">Konfirmasi</div>
+          </div>
+        </div>
+
+        <div class="confirmation-content">
+          <div class="confirmation-icon success">
+            <i class="fas fa-check-circle"></i>
+          </div>
+
+          <h1>Terima Kasih! Pesanan Anda Diterima</h1>
+
+          <div class="confirmation-message">
+            <div class="message-box important">
+              <i class="fas fa-info-circle"></i>
+              <div>
+                <h3>⚠️ PENTING: BACA INFORMASI BERIKUT</h3>
+                <p>
+                  <strong
+                    >Admin Guluu Digital Store akan menghubungi Anda via
+                    WhatsApp</strong
+                  >
+                  setelah pembayaran diverifikasi.
+                </p>
+                <p>
+                  Proses verifikasi biasanya memakan waktu 1x24 jam (kecuali
+                  hari libur).
+                </p>
+              </div>
+            </div>
+
+            <div class="message-box info">
+              <i class="fas fa-mobile-alt"></i>
+              <div>
+                <h3>📱 Tetap Aktif di WhatsApp</h3>
+                <p>
+                  Pastikan WhatsApp Anda aktif dan dapat dihubungi pada nomor
+                  yang telah Anda berikan.
+                </p>
+              </div>
+            </div>
+
+            <div class="message-box warning">
+              <i class="fas fa-exclamation-triangle"></i>
+              <div>
+                <h3>❌ JANGAN KLIK TOMBOL APA PUN</h3>
+                <p>
+                  Jika ada orang mengaku dari Guluu Store meminta Anda klik link
+                  atau download aplikasi, itu adalah penipuan.
+                </p>
+                <p>
+                  <strong
+                    >Kami tidak akan pernah meminta Anda klik link atau download
+                    apapun.</strong
+                  >
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="order-details-summary">
+            <h3><i class="fas fa-receipt"></i> Detail Pesanan</h3>
+            <div class="order-summary" id="finalOrderSummary">
+              <!-- Akan diisi oleh JavaScript -->
+            </div>
+          </div>
+
+          <div class="confirmation-actions">
+            <a href="index.html" class="btn-primary">
+              <i class="fas fa-home"></i> Kembali ke Beranda
+            </a>
+            <a href="kategori.html" class="btn-secondary">
+              <i class="fas fa-shopping-bag"></i> Lihat Produk Lain
+            </a>
+          </div>
+
+          <div class="contact-support">
+            <p>
+              <i class="fas fa-headset"></i> Butuh bantuan? Hubungi Admin via
+              WhatsApp: <strong>+62 857-9390-3739</strong>
+            </p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+      <!-- ... sama seperti footer store utama ... -->
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/order-pending.js"></script>
+  </body>
+</html>

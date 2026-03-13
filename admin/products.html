@@ -1,0 +1,500 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manajemen Produk - Guluu Store</title>
+    <link rel="stylesheet" href="css/layout.css" />
+    <link rel="stylesheet" href="css/products.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://img.icons8.com/color/96/000000/shopping-bag.png"
+    />
+  </head>
+  <body>
+    <div class="admin-container">
+      <!-- Sidebar (sama seperti dashboard) -->
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <div class="logo-container">
+            <img src="logo.png" alt="logo" />
+            <h1 class="logo-text">Guluu<span>Store</span></h1>
+          </div>
+          <p class="store-subtitle">Admin Panel</p>
+        </div>
+
+        <nav class="sidebar-menu">
+          <ul class="menu-list">
+            <li class="menu-item" data-menu="dashboard">
+              <a href="dashboard.html">
+                <i class="fas fa-chart-line"></i>
+                <span class="menu-text">Dashboard</span>
+                <div class="menu-active-indicator"></div>
+                <div class="menu-hover-effect"></div>
+              </a>
+            </li>
+            <li class="menu-item active" data-menu="products">
+              <a href="products.html">
+                <i class="fas fa-box-open"></i>
+                <span class="menu-text">Produk</span>
+                <div class="menu-active-indicator"></div>
+                <div class="menu-hover-effect"></div>
+              </a>
+            </li>
+            <li class="menu-item" data-menu="orders">
+              <a href="orders.html">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="menu-text">Order</span>
+                <div class="menu-active-indicator"></div>
+                <div class="menu-hover-effect"></div>
+              </a>
+            </li>
+            <li class="menu-item" data-menu="customers">
+              <a href="customers.html">
+                <i class="fas fa-users"></i>
+                <span class="menu-text">Pelanggan</span>
+                <div class="menu-active-indicator"></div>
+                <div class="menu-hover-effect"></div>
+              </a>
+            </li>
+            <li class="menu-item" data-menu="analytics">
+              <a href="analytics.html">
+                <i class="fas fa-chart-pie"></i>
+                <span class="menu-text">Analitik</span>
+                <div class="menu-active-indicator"></div>
+                <div class="menu-hover-effect"></div>
+              </a>
+            </li>
+          </ul>
+
+          <div class="sidebar-footer">
+            <div class="version-info">
+              <i class="fas fa-code-branch"></i>
+              <span>v2.1.0</span>
+            </div>
+          </div>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <!-- Top Navbar -->
+        <header class="top-navbar">
+          <div class="navbar-left">
+            <button class="sidebar-toggle" id="sidebarToggle">
+              <i class="fas fa-bars"></i>
+            </button>
+            <div class="page-title">
+              <h2 id="pageTitle">Manajemen Produk</h2>
+              <p id="pageSubtitle">Kelola produk dan inventaris toko</p>
+            </div>
+          </div>
+
+          <div class="navbar-right">
+            <div class="navbar-tools">
+              <button
+                class="tool-btn"
+                id="addProductBtn"
+                title="Tambah Produk Baru"
+              >
+                <i class="fas fa-plus"></i>
+                <span>Tambah Produk</span>
+              </button>
+              <button class="tool-btn" id="exportBtn" title="Ekspor Data">
+                <i class="fas fa-file-export"></i>
+              </button>
+              <button class="tool-btn" id="filterBtn" title="Filter Produk">
+                <i class="fas fa-filter"></i>
+              </button>
+              <div class="search-box">
+                <input
+                  type="text"
+                  placeholder="Cari produk..."
+                  id="productSearch"
+                />
+                <i class="fas fa-search"></i>
+              </div>
+            </div>
+
+            <!-- Admin Profile (sama seperti dashboard) -->
+            <div class="admin-profile">
+              <div class="profile-info">
+                <div class="profile-avatar">
+                  <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="profile-details">
+                  <span class="admin-name" id="adminName">Admin Guluu</span>
+                  <span class="admin-role">Super Admin</span>
+                </div>
+              </div>
+              <div class="dropdown-arrow">
+                <i class="fas fa-chevron-down"></i>
+              </div>
+
+              <div class="profile-dropdown">
+                <div class="dropdown-item logout-btn" id="logoutBtn">
+                  <i class="fas fa-sign-out-alt"></i>
+                  <span>Logout</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <!-- Content Area -->
+        <main class="content-area">
+          <div class="content-wrapper">
+            <!-- Products Header -->
+            <div class="products-header">
+              <div class="header-stats">
+                <div class="stat-item">
+                  <i class="fas fa-box"></i>
+                  <div>
+                    <h3 id="totalProductsCount">0</h3>
+                    <p>Total Produk</p>
+                  </div>
+                </div>
+                <div class="stat-item">
+                  <i class="fas fa-check-circle"></i>
+                  <div>
+                    <h3 id="activeProductsCount">0</h3>
+                    <p>Aktif</p>
+                  </div>
+                </div>
+                <div class="stat-item">
+                  <i class="fas fa-times-circle"></i>
+                  <div>
+                    <h3 id="outOfStockCount">0</h3>
+                    <p>Stok Habis</p>
+                  </div>
+                </div>
+                <div class="stat-item">
+                  <i class="fas fa-tags"></i>
+                  <div>
+                    <h3 id="totalCategories">0</h3>
+                    <p>Kategori</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Products Actions -->
+            <div class="products-actions">
+              <div class="action-buttons">
+                <button class="action-btn active" data-filter="all">
+                  <i class="fas fa-boxes"></i>
+                  <span>Semua Produk</span>
+                </button>
+                <button class="action-btn" data-filter="active">
+                  <i class="fas fa-check-circle"></i>
+                  <span>Aktif</span>
+                </button>
+                <button class="action-btn" data-filter="inactive">
+                  <i class="fas fa-pause-circle"></i>
+                  <span>Nonaktif</span>
+                </button>
+                <button class="action-btn" data-filter="lowstock">
+                  <i class="fas fa-exclamation-triangle"></i>
+                  <span>Stok Sedikit</span>
+                </button>
+                <button class="action-btn" data-filter="outofstock">
+                  <i class="fas fa-times-circle"></i>
+                  <span>Stok Habis</span>
+                </button>
+              </div>
+
+              <div class="view-controls">
+                <button class="view-btn active" data-view="grid">
+                  <i class="fas fa-th-large"></i>
+                </button>
+                <button class="view-btn" data-view="list">
+                  <i class="fas fa-list"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Products Grid/List -->
+            <div class="products-container">
+              <div class="products-grid" id="productsGrid">
+                <!-- Products akan diisi oleh JavaScript -->
+              </div>
+
+              <div
+                class="products-list"
+                id="productsList"
+                style="display: none"
+              >
+                <!-- List view akan diisi oleh JavaScript -->
+              </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination" id="pagination">
+              <!-- Pagination akan diisi oleh JavaScript -->
+            </div>
+          </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="main-footer">
+          <p>
+            &copy; <span id="currentYear"></span> Guluu Store Admin Panel. Hak
+            Cipta Dilindungi.
+          </p>
+        </footer>
+      </div>
+    </div>
+
+    <!-- Add Product Modal -->
+    <div class="modal modal-lg" id="addProductModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3><i class="fas fa-plus-circle"></i> Tambah Produk Baru</h3>
+          <button class="modal-close">&times;</button>
+        </div>
+        <form id="addProductForm" class="modal-form">
+          <div class="modal-body">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="productName">
+                  <i class="fas fa-tag"></i>
+                  <span>Nama Produk *</span>
+                </label>
+                <input
+                  type="text"
+                  id="productName"
+                  name="productName"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="productSKU">
+                  <i class="fas fa-barcode"></i>
+                  <span>SKU *</span>
+                </label>
+                <input type="text" id="productSKU" name="productSKU" required />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="productCategory">
+                  <i class="fas fa-tags"></i>
+                  <span>Kategori *</span>
+                </label>
+                <select id="productCategory" name="productCategory" required>
+                  <option value="">Pilih Kategori</option>
+                  <!-- Categories akan diisi oleh JavaScript -->
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="productBrand">
+                  <i class="fas fa-copyright"></i>
+                  <span>Brand</span>
+                </label>
+                <input type="text" id="productBrand" name="productBrand" />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="productPrice">
+                  <i class="fas fa-money-bill-wave"></i>
+                  <span>Harga *</span>
+                </label>
+                <input
+                  type="number"
+                  id="productPrice"
+                  name="productPrice"
+                  min="0"
+                  step="1000"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="productStock">
+                  <i class="fas fa-boxes"></i>
+                  <span>Stok *</span>
+                </label>
+                <input
+                  type="number"
+                  id="productStock"
+                  name="productStock"
+                  min="0"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="productDescription">
+                <i class="fas fa-file-alt"></i>
+                <span>Deskripsi Produk</span>
+              </label>
+              <textarea
+                id="productDescription"
+                name="productDescription"
+                rows="4"
+              ></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>
+                <i class="fas fa-image"></i>
+                <span>Gambar Produk</span>
+              </label>
+              <div class="image-upload">
+                <div class="upload-area" id="uploadArea">
+                  <i class="fas fa-cloud-upload-alt"></i>
+                  <p>Drag & drop gambar atau <span>browse</span></p>
+                  <small>Max. 2MB (JPG, PNG)</small>
+                  <input
+                    type="file"
+                    id="productImage"
+                    accept="image/*"
+                    hidden
+                  />
+                </div>
+                <div class="image-preview" id="imagePreview"></div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="switch">
+                  <input
+                    type="checkbox"
+                    id="productStatus"
+                    name="productStatus"
+                    checked
+                  />
+                  <span class="slider"></span>
+                  <span class="switch-label">Status Aktif</span>
+                </label>
+              </div>
+              <div class="form-group">
+                <label class="switch">
+                  <input
+                    type="checkbox"
+                    id="productFeatured"
+                    name="productFeatured"
+                  />
+                  <span class="slider"></span>
+                  <span class="switch-label">Produk Unggulan</span>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              id="cancelAddProduct"
+            >
+              Batal
+            </button>
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-save"></i> Simpan Produk
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Edit Product Modal -->
+    <div class="modal modal-lg" id="editProductModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3><i class="fas fa-edit"></i> Edit Produk</h3>
+          <button class="modal-close">&times;</button>
+        </div>
+        <form id="editProductForm" class="modal-form">
+          <div class="modal-body">
+            <!-- Form akan diisi oleh JavaScript -->
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              id="cancelEditProduct"
+            >
+              Batal
+            </button>
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-save"></i> Update Produk
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal" id="deleteProductModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3><i class="fas fa-trash-alt"></i> Hapus Produk</h3>
+          <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p>Apakah Anda yakin ingin menghapus produk ini?</p>
+          <p class="modal-warning">
+            <i class="fas fa-exclamation-triangle"></i>
+            Produk yang dihapus tidak dapat dikembalikan. Semua data terkait
+            akan dihapus permanen.
+          </p>
+          <div class="product-to-delete" id="productToDelete">
+            <!-- Product info will be filled by JavaScript -->
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            id="cancelDeleteProduct"
+          >
+            Batal
+          </button>
+          <button
+            type="button"
+            class="btn btn-danger"
+            id="confirmDeleteProduct"
+          >
+            <i class="fas fa-trash"></i> Ya, Hapus Produk
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Detail Modal -->
+    <div class="modal modal-lg" id="productDetailModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3><i class="fas fa-info-circle"></i> Detail Produk</h3>
+          <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="product-detail" id="productDetailContent">
+            <!-- Product detail will be filled by JavaScript -->
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="closeDetailModal">
+            Tutup
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/products.js"></script>
+  </body>
+</html>

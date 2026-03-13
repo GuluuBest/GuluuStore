@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GuluuStore | Akun Premium & Layanan Digital</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="main-header">
+      <div class="container">
+        <div class="logo">
+          <a href="index.html" class="logo-link">
+            <img src="./assets/logo.png" alt="Logo" class="logo-img" />
+            <h1 class="logo-title">
+              Guluu<span class="logo-title-span">Store</span>
+            </h1>
+          </a>
+        </div>
+
+        <nav class="main-nav">
+          <ul>
+            <li>
+              <a href="#" class="active"><i class="fas fa-home"></i> Home</a>
+            </li>
+            <li>
+              <a href="kategori.html"
+                ><i class="fas fa-th-large"></i> Product</a
+              >
+            </li>
+            <li>
+              <a href="#"><i class="fas fa-shopping-bag"></i> Cek Pesanan</a>
+            </li>
+
+            <li>
+              <a href="#"><i class="fas fa-fire"></i> Tentang</a>
+            </li>
+            <li>
+              <a href="#"><i class="fas fya-question-circle"></i> Bantuan</a>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="header-tools">
+          <div class="theme-switch-container">
+            <label class="switch">
+              <input type="checkbox" id="themeToggle" />
+              <span class="slider"></span>
+            </label>
+            <span class="theme-label">Dark Mode</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero-section">
+      <div class="container">
+        <div class="hero-content">
+          <h2>Guluu Digital Store</h2>
+          <p>
+            Menyediakan berbagai aplikasi premium, layanan Discord, serta
+            berbagai produk dan jasa digital terpercaya dengan Garansi terjamin
+          </p>
+          <div class="hero-stats">
+            <div class="stat">
+              <span class="stat-number">100%</span>
+              <span class="stat-label">Bergaransi</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">98%</span>
+              <span class="stat-label">Kepuasan Pelanggan</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">24/7</span>
+              <span class="stat-label">Support Online</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main class="main-content">
+      <div class="container">
+        <div class="filters-section">
+          <div class="filters-header">
+            <div style="flex: 1; min-width: 0">
+              <h3><i class="fas fa-filter"></i> Filter Produk</h3>
+              <div class="filter-actions">
+                <select class="sort-select">
+                  <option value="popular">Terpopuler</option>
+                  <option value="newest">Terbaru</option>
+                  <option value="price-low">Harga Terendah</option>
+                  <option value="price-high">Harga Tertinggi</option>
+                </select>
+                <span class="product-count">12 Produk Ditemukan</span>
+              </div>
+            </div>
+            <div
+              class="search-box"
+              style="margin-left: 32px; min-width: 180px; align-self: center"
+            >
+              <input
+                type="text"
+                class="search-input"
+                placeholder="Cari produk..."
+              />
+              <i class="fas fa-search"></i>
+            </div>
+          </div>
+
+          <div class="filter-tags">
+            <button class="filter-tag active">Semua</button>
+            <button class="filter-tag">Aplikasi Premium</button>
+            <button class="filter-tag">Discord</button>
+            <button class="filter-tag">Jasa</button>
+            <button class="filter-tag">Template</button>
+          </div>
+        </div>
+
+        <!-- Products Grid -->
+        <div class="products-grid" id="productsGrid">
+          <!-- Products will be rendered here by JavaScript -->
+        </div>
+
+        <!-- Load More -->
+        <div class="load-more-container">
+          <button class="load-more-btn" id="loadMoreBtn">
+            <i class="fas fa-sync-alt"></i> Muat Lebih Banyak
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <div class="footer-brand">
+              <img src="./assets/logo.png" alt="Logo" class="logo-img" />
+              <h1 class="logo-title">
+                Guluu<span class="logo-title-span">Store</span>
+              </h1>
+            </div>
+            <p>
+              Toko digital terpercaya untuk kebutuhan aplikasi premium, discord,
+              jasa dan layanan digital lainnya.
+            </p>
+            <div class="social-links">
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-whatsapp"></i></a>
+              <!-- <a href="#"><i class="fab fa-telegram"></i></a> -->
+              <a href="#"><i class="fab fa-discord"></i></a>
+            </div>
+          </div>
+
+          <div class="footer-section">
+            <h4>Product</h4>
+            <ul>
+              <li><a href="#">Aplikasi Premium</a></li>
+              <li><a href="#">Discord</a></li>
+              <li><a href="#">Jasa</a></li>
+              <li><a href="#">Template</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <h4>Layanan</h4>
+            <ul>
+              <li><a href="#">Cara Beli</a></li>
+              <li><a href="#">Garansi Produk</a></li>
+              <li><a href="#">Bantuan 24/7</a></li>
+              <li><a href="#">FAQ</a></li>
+              <li><a href="#">Syarat & Ketentuan</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <h4>Kontak</h4>
+            <div class="contact-info">
+              <p><i class="fas fa-envelope"></i> guluudigital@store.com</p>
+              <p><i class="fas fa-phone"></i> +62 857-9390-3739</p>
+              <p><i class="fas fa-clock"></i> Buka 24/7</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>&copy; 2024 GuluuStore. All rights reserved.</p>
+          <div class="payment-methods">
+            <i class="fab fa-cc-visa"></i>
+            <i class="fab fa-cc-mastercard"></i>
+            <i class="fab fa-cc-paypal"></i>
+            <i class="fab fa-bitcoin"></i>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

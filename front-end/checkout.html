@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkout | Guluu Digital Store</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/checkout.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body data-theme="dark">
+    <header class="main-header">
+      <div class="container">
+        <div class="logo">
+          <a href="index.html" class="logo-link">
+            <img src="./assets/logo.png" alt="Logo" class="logo-img" />
+            <h1 class="logo-title">
+              Guluu<span class="logo-title-span">Store</span>
+            </h1>
+          </a>
+        </div>
+
+        <nav class="main-nav">
+          <ul>
+            <li>
+              <a href="#" class="active"><i class="fas fa-home"></i> Home</a>
+            </li>
+            <li>
+              <a href="kategori.html"
+                ><i class="fas fa-th-large"></i> Product</a
+              >
+            </li>
+            <li>
+              <a href="#"><i class="fas fa-shopping-bag"></i> Cek Pesanan</a>
+            </li>
+
+            <li>
+              <a href="#"><i class="fas fa-fire"></i> Tentang</a>
+            </li>
+            <li>
+              <a href="#"><i class="fas fa-question-circle"></i> Bantuan</a>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="header-tools">
+          <div class="theme-switch-container">
+            <label class="switch">
+              <input type="checkbox" id="themeToggle" />
+              <span class="slider"></span>
+            </label>
+            <span class="theme-label">Dark Mode</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="checkout-container">
+      <div class="container">
+        <!-- Progress Steps -->
+        <div class="checkout-progress">
+          <div class="progress-step active">
+            <div class="step-number">1</div>
+            <div class="step-label">Checkout</div>
+          </div>
+          <div class="progress-step">
+            <div class="step-number">2</div>
+            <div class="step-label">Pembayaran</div>
+          </div>
+          <div class="progress-step">
+            <div class="step-number">3</div>
+            <div class="step-label">Konfirmasi</div>
+          </div>
+        </div>
+
+        <div class="checkout-layout">
+          <!-- LEFT: Customer Form -->
+          <div class="checkout-form-section">
+            <h2><i class="fas fa-user-circle"></i> Data Customer</h2>
+
+            <form id="customerForm">
+              <div class="form-group">
+                <label for="customerName">
+                  <i class="fas fa-user"></i> Nama Lengkap
+                  <span class="required">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="customerName"
+                  placeholder="Masukkan nama lengkap"
+                  required
+                />
+                <div class="error-message" id="nameError"></div>
+              </div>
+
+              <div class="form-group">
+                <label for="customerWhatsApp">
+                  <i class="fab fa-whatsapp"></i> Nomor WhatsApp
+                  <span class="required">*</span>
+                </label>
+                <div class="input-with-prefix">
+                  <span class="prefix">+62</span>
+                  <input
+                    type="tel"
+                    id="customerWhatsApp"
+                    placeholder="81234567890"
+                    required
+                  />
+                </div>
+                <small class="input-note"
+                  >Admin akan menghubungi via nomor ini</small
+                >
+                <div class="error-message" id="waError"></div>
+              </div>
+
+              <div class="form-group">
+                <label for="customerEmail">
+                  <i class="fas fa-envelope"></i> Email (Opsional)
+                </label>
+                <input
+                  type="email"
+                  id="customerEmail"
+                  placeholder="email@example.com"
+                />
+                <small class="input-note"
+                  >Untuk invoice dan reset password produk</small
+                >
+              </div>
+
+              <div class="form-group">
+                <label for="customerNote">
+                  <i class="fas fa-sticky-note"></i> Catatan Pesanan (Opsional)
+                </label>
+                <textarea
+                  id="customerNote"
+                  rows="3"
+                  placeholder="Catatan khusus untuk admin..."
+                ></textarea>
+              </div>
+
+              <div class="form-actions">
+                <button
+                  type="button"
+                  class="btn-back"
+                  onclick="window.history.back()"
+                >
+                  <i class="fas fa-arrow-left"></i> Kembali
+                </button>
+                <button type="submit" class="btn-primary" id="proceedToPayment">
+                  <i class="fas fa-lock"></i> Lanjut ke Pembayaran
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- RIGHT: Order Summary -->
+          <div class="order-summary-section">
+            <div class="order-summary-sticky">
+              <h2><i class="fas fa-receipt"></i> Ringkasan Pesanan</h2>
+
+              <div class="order-items" id="orderItems">
+                <!-- Akan diisi oleh JavaScript -->
+              </div>
+
+              <div class="order-totals">
+                <div class="total-row">
+                  <span>Subtotal</span>
+                  <span id="subtotal">Rp 0</span>
+                </div>
+                <div class="total-row">
+                  <span>Biaya Layanan</span>
+                  <span>Rp 0</span>
+                </div>
+                <div class="total-row grand-total">
+                  <span>Total Pembayaran</span>
+                  <span id="grandTotal">Rp 0</span>
+                </div>
+              </div>
+
+              <div class="order-note">
+                <i class="fas fa-info-circle"></i>
+                <p>
+                  Semua produk digital akan dikirim via WhatsApp/Email setelah
+                  pembayaran diverifikasi oleh admin.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer (sama dengan store utama) -->
+    <footer class="main-footer">
+      <!-- ... sama seperti footer store utama ... -->
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/checkout.js"></script>
+  </body>
+</html>
