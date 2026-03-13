@@ -28,11 +28,17 @@ document.addEventListener("DOMContentLoaded", function () {
   themeToggle.checked = savedTheme === "light";
 });
 
-// Load and render products
-function loadProducts() {
-  currentProducts = getProducts(); // Gunakan fungsi dari data.js
-  applyFiltersAndSort();
-  renderProducts();
+async function loadProducts() {
+  try {
+    const res = await fetch("https://guluustore.onrender.com/products");
+    const data = await res.json();
+
+    currentProducts = data;
+    applyFiltersAndSort();
+    renderProducts();
+  } catch (err) {
+    console.error("Gagal mengambil produk:", err);
+  }
 }
 
 function applyFiltersAndSort() {
@@ -200,7 +206,6 @@ function createProductCard(product) {
   return card;
 }
 
-// Setup event listeners
 function setupEventListeners() {
   // Theme toggle
   if (themeToggle) {

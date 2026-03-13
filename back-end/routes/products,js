@@ -1,0 +1,24 @@
+const express = require("express");
+const db = require("../db");
+
+const router = express.Router();
+
+// GET /api/products
+router.get("/", (req, res) => {
+  db.getAllProducts((err, products) => {
+    if (err) {
+      return res.status(500).json({
+        success: false,
+        error: "Gagal mengambil produk"
+      });
+    }
+
+    res.json({
+      success: true,
+      count: products.length,
+      products: products
+    });
+  });
+});
+
+module.exports = router;
