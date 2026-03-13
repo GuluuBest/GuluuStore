@@ -5,7 +5,6 @@ const fs = require("fs");
 const db = require("./db");
 
 const ordersRouter = require("./routes/orders");
-const productRoutes = require("./routes/products");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -60,7 +59,6 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/api/products", productRoutes);
 app.use("/api/orders", ordersRouter);
 
 app.get("/health", (req, res) => {
