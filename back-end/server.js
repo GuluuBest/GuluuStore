@@ -207,7 +207,7 @@ if (!fs.existsSync("uploads")) {
   console.log(`[${new Date().toISOString()}] 📁 Uploads folder created`);
 }
 
-app.listen(PORT, "192.168.100.17", () => {
+app.listen(PORT, () => {
   const timestamp = new Date().toISOString();
   console.log(`[${timestamp}] 🚀 Server running at http://localhost:${PORT}`);
   console.log(`[${timestamp}] 📁 Database: database.sqlite`);
