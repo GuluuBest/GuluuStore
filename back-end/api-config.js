@@ -1,6 +1,6 @@
 // API Configuration
 const API_CONFIG = {
-  baseURL: "http://192.168.100.17:3000/api", // Sesuaikan dengan IP server Anda
+  baseURL: "https://guluustore.onrender.com", // Sesuaikan dengan IP server Anda
   endpoints: {
     login: "/auth/login",
     orders: "/orders",
