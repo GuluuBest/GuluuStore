@@ -115,82 +115,56 @@ function initializeAuthEvents() {
   }
 }
 
-// Handle login
+// Handle login (Sudah diperbaiki untuk hit API backend)
 function handleLogin() {
   const username = document.getElementById("username").value.trim();
   const password = document.getElementById("password").value;
   const rememberMe = document.getElementById("rememberMe")?.checked || false;
 
-  // Simple validation
   if (!username || !password) {
     showAuthError("Harap isi username dan password");
     return;
   }
 
-  // Password validation
-  if (password.length < 6) {
-    showAuthError("Password minimal 6 karakter");
-    return;
-  }
-
-  // Show loading state
   showAuthLoading(true);
 
-  // Simulate API call - In real app, this would be a fetch to your backend
-  setTimeout(() => {
-    // Demo credentials (In real app, verify against database)
-    const validCredentials = validateCredentials(username, password);
-
-    if (validCredentials) {
-      // Login successful
-      loginSuccess(username, password, rememberMe);
-    } else {
-      // Login failed
-      loginFailed();
-    }
-  }, 1500);
+  // Lakukan request ke Backend Render
+  fetch("https://guluustore.onrender.com/api/auth/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ username, password }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.success) {
+        // Simpan token dari backend untuk akses endpoint admin
+        localStorage.setItem("adminToken", data.token);
+        loginSuccess(
+          data.user.username,
+          data.user.name,
+          data.user.role,
+          rememberMe,
+        );
+      } else {
+        loginFailed(data.error || "Username atau password salah");
+      }
+    })
+    .catch((error) => {
+      console.error("Login error:", error);
+      loginFailed("Gagal terhubung ke server backend.");
+    });
 }
 
-// Validate credentials (Demo function - replace with real backend API)
-function validateCredentials(username, password) {
-  // Demo users (In real app, this would be from database)
-  const demoUsers = [
-    {
-      username: "admin",
-      password: "guluustore123",
-      name: "Admin Guluu",
-      role: "Super Admin",
-    },
-  ];
-
-  // Check if credentials match any demo user
-  return demoUsers.some(
-    (user) => user.username === username && user.password === password,
-  );
-}
-
-// Login successful
-function loginSuccess(username, password, rememberMe) {
-  // Get user data based on username
-  const demoUsers = [
-    {
-      username: "admin",
-      password: "guluustore123",
-      name: "Admin Guluu",
-      role: "Super Admin",
-    },
-  ];
-
-  const user = demoUsers.find((u) => u.username === username);
-
-  // Store auth data
+// Update fungsi loginSuccess
+function loginSuccess(username, name, role, rememberMe) {
   localStorage.setItem("guluu_admin_logged_in", "true");
   localStorage.setItem("guluu_admin_username", username);
-  localStorage.setItem("guluu_admin_name", user?.name || "Admin");
-  localStorage.setItem("guluu_admin_role", user?.role || "Admin");
+  localStorage.setItem("guluu_admin_name", name);
+  localStorage.setItem("guluu_admin_role", role);
   localStorage.setItem("guluu_login_time", new Date().toISOString());
 
-  // Remember me functionality
   if (rememberMe) {
     localStorage.setItem("guluu_remember_me", "true");
     localStorage.setItem("guluu_remembered_username", username);
@@ -199,40 +173,25 @@ function loginSuccess(username, password, rememberMe) {
     localStorage.removeItem("guluu_remembered_username");
   }
 
-  // Hide loading state
   showAuthLoading(false);
-
-  // Show success message
   showAuthSuccess("Login berhasil! Mengalihkan...");
 
-  // Redirect to dashboard after delay
   setTimeout(() => {
     window.location.href = "dashboard.html";
   }, 1000);
 }
 
-// Login failed
-function loginFailed() {
-  // Hide loading state
+// Update fungsi loginFailed untuk menerima pesan error
+function loginFailed(errorMessage = "Email atau password salah") {
   showAuthLoading(false);
+  showAuthError(errorMessage);
 
-  // Show error message
-  showAuthError("Email atau password salah");
-
-  // Shake animation for error
   const loginForm = document.getElementById("loginForm");
   if (loginForm) {
     loginForm.classList.add("shake");
     setTimeout(() => {
       loginForm.classList.remove("shake");
     }, 500);
-  }
-
-  // Clear password field
-  const passwordInput = document.getElementById("password");
-  if (passwordInput) {
-    passwordInput.value = "";
-    passwordInput.focus();
   }
 }
 
