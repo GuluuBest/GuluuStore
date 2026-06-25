@@ -8,7 +8,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const recentOrdersList = document.getElementById("recentOrdersList");
   const contactSupportBtn = document.getElementById("contactSupportBtn");
 
-  const API_URL = "http://192.168.100.17:3000/api";
+  // const API_URL = "http://192.168.100.17:3000/api";
+  const API_URL = "http://127.0.0.1:3000/api";
 
   function init() {
     attachEventListeners();
@@ -566,7 +567,7 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    const baseUrl = "http://192.168.100.17:3000";
+    const baseUrl = "http://127.0.0.1:3000";
     const imageUrl = proofPath.startsWith("http")
       ? proofPath
       : `${baseUrl}${proofPath}`;

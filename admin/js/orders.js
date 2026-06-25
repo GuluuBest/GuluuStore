@@ -1,4 +1,5 @@
-const API_BASE_URL = "https://guluustore.onrender.com/api";
+// const API_BASE_URL = "https://guluustore.onrender.com/api";
+const API_BASE_URL = "http://127.0.0.1:3000/api";
 
 let allOrders = [];
 let currentFilter = "all";
@@ -116,7 +117,7 @@ function createOrderRow(order) {
   const proofUrl = order.payment_proof
     ? order.payment_proof.startsWith("http")
       ? order.payment_proof.replace("https://", "http://")
-      : `https://guluustore.onrender.com${order.payment_proof}`
+      : `http://127.0.0.1:3000${order.payment_proof}`
     : null;
 
   // Generate HTML untuk produk
@@ -729,7 +730,7 @@ function showOrderDetailModal(order) {
   const proofUrl = order.payment_proof
     ? order.payment_proof.startsWith("http")
       ? order.payment_proof.replace("https://", "http://")
-      : `https://guluustore.onrender.com${order.payment_proof}`
+      : `http://127.0.0.1:3000${order.payment_proof}`
     : null;
 
   const html = `

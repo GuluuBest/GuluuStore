@@ -9,7 +9,6 @@ const passwordError = document.getElementById("passwordError");
 const rememberMe = document.getElementById("rememberMe");
 const notification = document.getElementById("notification");
 
-// Demo credentials (dummy validation)
 const DEMO_CREDENTIALS = {
   username: "admin",
   password: "guluustore123",

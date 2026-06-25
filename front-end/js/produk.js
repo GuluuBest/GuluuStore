@@ -1,14 +1,11 @@
-// DOM Elements
 const productDetail = document.getElementById("productDetail");
 const relatedProducts = document.getElementById("relatedProducts");
 const productCategory = document.getElementById("productCategory");
 const backToTop = document.getElementById("backToTop");
 const themeToggle = document.getElementById("themeToggle");
 
-// State untuk variant yang dipilih
 let selectedVariant = null;
 
-// Initialize
 document.addEventListener("DOMContentLoaded", function () {
   // Get product ID from URL
   const urlParams = new URLSearchParams(window.location.search);

@@ -1,4 +1,5 @@
-const API_URL = "https://guluustore.onrender.com/api";
+// const API_URL = "https://guluustore.onrender.com/api";
+const API_URL = "http://127.0.0.1:3000/api";
 
 const uploadArea = document.getElementById("uploadArea");
 const paymentProof = document.getElementById("paymentProof");
@@ -10,12 +11,10 @@ const paymentOrderItems = document.getElementById("paymentOrderItems");
 const paymentTotal = document.getElementById("paymentTotal");
 const customerInfo = document.getElementById("customerInfo");
 
-// State
 let orderSummary = null;
 let customerData = null;
 let proofImage = null;
 
-// Initialize
 document.addEventListener("DOMContentLoaded", function () {
   console.log("[PAYMENT] Page loaded");
   // Load order data
@@ -224,15 +223,6 @@ function removeProofImage() {
 async function confirmPayment() {
   console.log("[PAYMENT] confirmPayment() called");
 
-  if (!proofImage) {
-    console.log("[PAYMENT] No proof image");
-    alert("Harap upload bukti pembayaran terlebih dahulu");
-    confirmPaymentBtn.disabled = false;
-    confirmPaymentBtn.innerHTML =
-      '<i class="fas fa-check-circle"></i> Saya Sudah Bayar';
-    return;
-  }
-
   const fileInput = document.getElementById("paymentProof");
   const file = fileInput.files[0];
 
@@ -245,7 +235,7 @@ async function confirmPayment() {
     return;
   }
 
-  console.log("[PAYMENT] File:", file.name, "Size:", file.size);
+  console.log("[PAYMENT] File:", file.name, "Size:", file.size, "Type:", file.type);
 
   const formData = new FormData();
 
@@ -260,24 +250,31 @@ async function confirmPayment() {
   }
 
   formData.append("order_code", orderCode);
-  formData.append("customer_name", customerData.name);
-  formData.append("whatsapp", customerData.whatsapp);
+  formData.append("customer_name", customerData.name || "");
+  formData.append("whatsapp", customerData.whatsapp || "");
   formData.append("email", customerData.email || "");
   formData.append("notes", customerData.note || "");
-  formData.append("product_data", JSON.stringify(orderSummary.items));
-  formData.append("total_price", orderSummary.total.toString());
-  formData.append("payment_proof", file);
+  formData.append("product_data", JSON.stringify(orderSummary.items || []));
+  formData.append("total_price", (orderSummary.total || 0).toString());
+  formData.append("payment_proof", file, file.name);
 
-  console.log("[PAYMENT] Sending to backend...");
-  console.log("[PAYMENT] Order Code:", orderCode);
+  console.log("[PAYMENT] FormData prepared:");
+  console.log("[PAYMENT] - Order Code:", orderCode);
+  console.log("[PAYMENT] - Customer Name:", customerData.name);
+  console.log("[PAYMENT] - WhatsApp:", customerData.whatsapp);
+  console.log("[PAYMENT] - Total Price:", orderSummary.total);
+  console.log("[PAYMENT] - File:", file.name);
 
   try {
+    console.log("[PAYMENT] Making fetch request to:", `${API_URL}/orders`);
     const response = await fetch(`${API_URL}/orders`, {
       method: "POST",
       body: formData,
     });
 
     console.log("[PAYMENT] Response status:", response.status);
+    console.log("[PAYMENT] Response headers:", Object.fromEntries(response.headers));
+    
     const result = await response.json();
     console.log("[PAYMENT] Response data:", result);
 
@@ -301,6 +298,7 @@ async function confirmPayment() {
     window.location.href = "order-pending-new.html";
   } catch (error) {
     console.error("[PAYMENT] ❌ Error:", error);
+    console.error("[PAYMENT] Error message:", error.message);
     console.error("[PAYMENT] Error stack:", error.stack);
 
     alert(`❌ Error: ${error.message}`);

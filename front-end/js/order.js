@@ -1,4 +1,5 @@
-const API_URL = "https://guluustore.onrender.com/api";
+// const API_URL = "https://guluustore.onrender.com/api";
+const API_URL = "http://127.0.0.1:3000/api";
 
 document.addEventListener("DOMContentLoaded", function () {
   loadOrders();

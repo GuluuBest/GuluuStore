@@ -117,12 +117,14 @@
 }
 
 [data-theme="light"] {
-  --dark-bg: #f5f7fa;
-  --card-bg: rgba(255, 255, 255, 0.97);
-  --card-border: rgba(28, 160, 227, 0.15);
-  --text-primary: #1a1a2e;
-  --text-secondary: #4a6a7b;
-  --shadow: 0 10px 30px rgba(28, 160, 227, 0.08);
+  --dark-bg: #ffffff;
+  --card-bg: #ffffff;
+  --card-border: #e5e7eb;
+
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
 }
 
 * {
@@ -145,14 +147,10 @@ body {
   padding: 0 20px;
 }
 
-/* Header Styles */
-.main-header {
-  background: rgba(10, 25, 41, 0.95);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--card-border);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
+[data-theme="light"] .main-header {
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .main-header .container {
@@ -238,7 +236,7 @@ body {
 .search-box input {
   width: 100%;
   padding: 8px 35px 8px 10px;
-  background: rgba(0, 217, 255, 0.1);
+  background: #ffffff;
   border: 1px solid rgba(0, 217, 255, 0.2);
   border-radius: 10px;
   color: var(--text-primary);
@@ -318,7 +316,6 @@ input:checked + .slider:before {
   font-weight: 600;
 }
 
-/* Hero Section */
 .hero-section {
   background: linear-gradient(
     135deg,
@@ -376,13 +373,19 @@ input:checked + .slider:before {
   margin-top: 5px;
 }
 
-/* Filters Section */
 .filters-section {
   background: linear-gradient(90deg, #1a2636 0%, #233447 100%);
   padding: 24px 32px 20px 32px;
   border-radius: 18px;
   margin-bottom: 32px;
   border: 1px solid rgba(0, 217, 255, 0.2);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .filters-section {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 2px 12px rgba(0,0,0,.05);
 }
 
 .filters-header {
@@ -394,7 +397,7 @@ input:checked + .slider:before {
 }
 
 .filters-header h3 {
-  color: #fff;
+  color: #111827;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -442,8 +445,8 @@ input:checked + .slider:before {
 }
 
 .filter-tag {
-  background: rgba(0, 217, 255, 0.1);
-  border: 1px solid rgba(0, 217, 255, 0.2);
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
   color: var(--text-primary);
   padding: 8px 16px;
   border-radius: 20px;
@@ -635,7 +638,7 @@ input:checked + .slider:before {
 
 /* Footer */
 .main-footer {
-  background: rgba(10, 25, 41, 0.95);
+  background: #ffff(10, 25, 41, 0.95);
   border-top: 1px solid var(--card-border);
   padding: 50px 0 20px;
   margin-top: 60px;

@@ -5,22 +5,17 @@ const sortSelect = document.querySelector(".sort-select");
 const filterTags = document.querySelectorAll(".filter-tag");
 const productCount = document.querySelector(".product-count");
 
-// State
 let currentProducts = [];
 let displayedCount = 8;
 let currentFilter = "all";
 let currentSort = "popular";
 
-// Initialize
 document.addEventListener("DOMContentLoaded", function () {
-  // Load products
   loadProducts();
 
-  // Setup event listeners
   setupEventListeners();
 
-  // Check saved theme
-  const savedTheme = localStorage.getItem("theme") || "dark";
+  const savedTheme = localStorage.getItem("theme") || "light";
   setTheme(savedTheme);
   themeToggle.checked = savedTheme === "light";
 });
@@ -39,9 +34,8 @@ async function loadProducts() {
 }
 
 function applyFiltersAndSort() {
-  // Apply filter
   if (currentFilter === "all") {
-    currentProducts = getProducts(); // Gunakan fungsi dari data.js
+    currentProducts = getProducts();
   } else {
     currentProducts = getProducts().filter(
       (product) => product.category === currentFilter,
@@ -321,11 +315,9 @@ function updateProductsByFilterAndSearch() {
   renderProducts();
 }
 
-// Theme management
 function setTheme(theme) {
   document.body.setAttribute("data-theme", theme);
 
-  // Update theme label
   const themeLabel = document.querySelector(".theme-label");
   if (themeLabel) {
     themeLabel.textContent = theme === "light" ? "Light Mode" : "Dark Mode";
